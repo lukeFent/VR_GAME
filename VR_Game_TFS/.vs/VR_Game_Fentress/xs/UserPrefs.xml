@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{197BFD31-A1DF-EDC9-0661-D0CA951BA819}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CheapFirstPersonShooter.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Interact.cs" Line="7" Column="4" />
+      <File FileName="Assets/Scripts/Bullet.cs" Line="20" Column="10" />
+      <File FileName="Assets/Scripts/InteractClass.cs" Line="5" Column="43" />
+      <File FileName="Assets/Scripts/BodyInteract.cs" Line="11" Column="26" />
+      <File FileName="Assets/Scripts/RagDollController.cs" Line="38" Column="1" />
+      <File FileName="Assets/Scripts/CheapFirstPersonShooter.cs" Line="8" Column="22" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="VR_Game_Fentress" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="CheapFirstPersonShooter.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b2dc6aa1-539f-4698-b322-d5938e186059" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
