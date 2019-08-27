@@ -6,7 +6,7 @@ public class RagDollController : MonoBehaviour
 {
 
     public Animator ani; 
-    public Rigidbody[] ragDoll = new Rigidbody[13];
+    public Rigidbody[] ragDoll = new Rigidbody[11];
     public BoxCollider box; 
     
 
@@ -23,13 +23,41 @@ public class RagDollController : MonoBehaviour
         {
             ragDoll[i].isKinematic = value;
         }
+
+      
+    }
+
+
+    public void PickYourselfUp()
+    {
+        StartCoroutine(GetUp());
+    }
+
+    IEnumerator GetUp()
+    {
+          yield return new WaitForSeconds(0.05f);
+
+        box.enabled = true;
+        TurnOnRagDoll(true);
+       // ani.enabled = true;
+
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
+        ani = GetComponentInChildren<Animator>();
+
         TurnOnRagDoll(true);
+    }
+
+    public void KnockBack(Vector3 direction)
+    {
+        for(int i = 0; i < ragDoll.Length; i++)
+        {
+            ragDoll[i].AddExplosionForce(10, direction, 5);
+        }
     }
 
     public void KnockAbout()
@@ -37,6 +65,8 @@ public class RagDollController : MonoBehaviour
         box.enabled = false;
         ani.enabled = false;
         TurnOnRagDoll(false);
+
+        //StartCoroutine(TurnRagDollOffAfterASec());
     }
 
 
@@ -50,5 +80,14 @@ public class RagDollController : MonoBehaviour
         }
 
     }
+
+    IEnumerator TurnRagDollOffAfterASec()
+    {
+        yield return new WaitForSeconds(2f);
+        TurnOnRagDoll(true);
+
+
+    }
+
 }
 

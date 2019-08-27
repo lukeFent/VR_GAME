@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    float thrust = 10; 
+    public float thrust; 
     private Rigidbody body;
 
     private void Start()
@@ -18,12 +18,17 @@ public class Bullet : MonoBehaviour
         body.AddForce(transform.forward * thrust, ForceMode.Impulse);
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.GetComponent<InteractClass>())
         {
-            other.transform.GetComponent<InteractClass>().Interact();
+            body.mass = 1;
+            Vector3 heading = transform.position - other.transform.position;
+            float distance = heading.magnitude;
+            Vector3 direction = heading / distance; 
+
+
+            other.transform.GetComponent<InteractClass>().Interact(direction);
         }
     }
 }

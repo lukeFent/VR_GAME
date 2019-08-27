@@ -234,21 +234,8 @@ MonoBehaviour:
     type: 3}
   sensitivity: 5
   smoothness: 2
-  character: {fileID: 0}
-  jumpHeight: 5
-  m_FB: 0
-  m_LR: 0
-  p_speed: 6
-  p_MS: 20
-  DeadZone: 0.028
-  currentXRotation: 0
-  currentYRotation: 0
-  xRotationV: 0
-  yRotationV: 0
-  enemies: []
-  positions: []
-  cameraRotateSpeed: 0
-  deadEnemies: 0
+  laz: {fileID: 0}
+  zPos: 0
 --- !u!54 &249
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -314,7 +301,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 198490, guid: 5ca80f4596fa44b87912a0592346d260, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 424718, guid: 5ca80f4596fa44b87912a0592346d260, type: 3}
       propertyPath: m_LocalPosition.x
@@ -350,15 +337,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ca80f4596fa44b87912a0592346d260, type: 3}
---- !u!1 &3871166655148996236 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 198490, guid: 5ca80f4596fa44b87912a0592346d260,
-    type: 3}
-  m_PrefabInstance: {fileID: 3871166655148929494}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3871166655148804824 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 424718, guid: 5ca80f4596fa44b87912a0592346d260,
+    type: 3}
+  m_PrefabInstance: {fileID: 3871166655148929494}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3871166655148996236 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 198490, guid: 5ca80f4596fa44b87912a0592346d260,
     type: 3}
   m_PrefabInstance: {fileID: 3871166655148929494}
   m_PrefabAsset: {fileID: 0}
@@ -375,7 +362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 555767533, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1820761120, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -489,6 +476,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 150}
     m_Modifications:
+    - target: {fileID: 171526, guid: 60270cf52a5e94998a5a335989159738, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 482300, guid: 60270cf52a5e94998a5a335989159738, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
