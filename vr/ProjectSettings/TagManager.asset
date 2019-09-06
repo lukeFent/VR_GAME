@@ -8,6 +8,8 @@ TagManager:
   - Enemies
   - Bullet
   - Ground
+  - Friend
+  - weapon
   layers:
   - Default
   - TransparentFX
