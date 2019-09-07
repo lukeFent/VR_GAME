@@ -37,14 +37,14 @@ public class GunClass : MonoBehaviour
 
     public void Shooting()
     {
-        if (ammoInClip <= 0)
-        {
-            StartCoroutine(Reload(reloadTime));
-        }
-        else if(ammoInClip >= 1 && canShoot)
+        if(ammoInClip >= 1 && canShoot)
         {
             StartCoroutine(ShootingSpeed(shootingSpeed));
         }    
+        else if(ammoInClip <= 0)
+        {
+            StartCoroutine(Reload(reloadTime));
+        }
     }
 
     public void Shoot()
@@ -58,10 +58,15 @@ public class GunClass : MonoBehaviour
     {
         Shoot();
         anim.Play();
-        StartCoroutine(MuzzleFlare(shootingSpeed));
+        if (particle != null)
+        {
+            StartCoroutine(MuzzleFlare(shootingSpeed));
+        }
         canShoot = false;
         ammoInClip -= 1;
+        Debug.Log("here");
         yield return new WaitForSeconds(x);
+        Debug.Log("there");
         canShoot = true;
     }
 

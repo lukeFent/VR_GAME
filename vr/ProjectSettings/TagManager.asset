@@ -9,7 +9,9 @@ TagManager:
   - Bullet
   - Ground
   - Friend
-  - weapon
+  - Pistol
+  - Shotgun
+  - AK47
   layers:
   - Default
   - TransparentFX

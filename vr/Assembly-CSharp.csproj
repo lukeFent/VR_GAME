@@ -60,7 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AnimationTest.cs" />
     <Compile Include="Assets\GoogleVR\Beta\Demos\Scripts\DemoObjectController6DoF.cs" />
     <Compile Include="Assets\GoogleVR\Beta\Demos\Scripts\DemoSeeThroughController.cs" />
     <Compile Include="Assets\GoogleVR\Beta\Scripts\GvrBetaControllerInput.cs" />
@@ -185,24 +184,26 @@
     <Compile Include="Assets\GoogleVR\Scripts\Utilities\Internal\GvrCursorHelper.cs" />
     <Compile Include="Assets\GoogleVR\Scripts\Utilities\Internal\SuppressMemoryAllocationErrorAttribute.cs" />
     <Compile Include="Assets\GoogleVR\Scripts\Video\GvrVideoPlayerTexture.cs" />
-    <Compile Include="Assets\GunClass.cs" />
-    <Compile Include="Assets\Luke's Ragdoll\Scripts\BodyInteract.cs" />
-    <Compile Include="Assets\Luke's Ragdoll\Scripts\Bullet.cs" />
-    <Compile Include="Assets\Luke's Ragdoll\Scripts\CheapFirstPersonShooter.cs" />
-    <Compile Include="Assets\Luke's Ragdoll\Scripts\EnemyIndividualBehavior.cs" />
-    <Compile Include="Assets\Luke's Ragdoll\Scripts\InteractClass.cs" />
-    <Compile Include="Assets\Luke's Ragdoll\Scripts\RagDollController.cs" />
-    <Compile Include="Assets\Luke's Ragdoll\Scripts\ZombHands.cs" />
-    <Compile Include="Assets\NavMesh_Zomb.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshLink.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
     <Compile Include="Assets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
-    <Compile Include="Assets\Pistol.cs" />
+    <Compile Include="Assets\Scripts\AnimationTest.cs" />
     <Compile Include="Assets\Scripts\BodyBehaviour.cs" />
+    <Compile Include="Assets\Scripts\BodyInteract.cs" />
+    <Compile Include="Assets\Scripts\Enemies\EnemyIndividualBehavior.cs" />
+    <Compile Include="Assets\Scripts\Enemies\NavMesh_Zomb.cs" />
+    <Compile Include="Assets\Scripts\Enemies\ZombHands.cs" />
+    <Compile Include="Assets\Scripts\Enemies\ZombInteract.cs" />
+    <Compile Include="Assets\Scripts\InteractClass.cs" />
     <Compile Include="Assets\Scripts\Laser.cs" />
-    <Compile Include="Assets\Scripts\ZombInteract.cs" />
-    <Compile Include="Assets\Shotgun.cs" />
+    <Compile Include="Assets\Scripts\Player\CheapFirstPersonShooter.cs" />
+    <Compile Include="Assets\Scripts\RagDollController.cs" />
+    <Compile Include="Assets\Scripts\Weapons\AK47.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Weapons\GunClass.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Pistol.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Shotgun.cs" />
     <None Include="Assets\GoogleVR\Shaders\GvrUIOverlayFont.shader" />
     <None Include="Assets\Glass.shader" />
     <None Include="Assets\GoogleVR\Shaders\GvrAdditiveOverlay.shader" />
@@ -218,7 +219,7 @@
     <None Include="Assets\Scenes\READ ME - About Scene.txt" />
     <None Include="Assets\GoogleVR\Plugins\Android\AndroidManifest-Daydream.xml" />
     <None Include="Assets\GoogleVR\Demos\Shaders\HelloVR\HelloVRUnlitGrayscaleToColor.shader" />
-    <None Include="Assets\Weapons Pack(LOW POLY)\Weapons Pack info.txt" />
+    <None Include="Assets\ImportedAssets\Weapons Pack(LOW POLY)\Weapons Pack info.txt" />
     <None Include="Assets\GoogleVR\Shaders\GvrReticleShader.shader" />
     <None Include="Assets\GoogleVR\Shaders\GvrUIOverlay.shader" />
     <None Include="Assets\GoogleVR\Plugins\Android\proguard-gvr.txt" />
