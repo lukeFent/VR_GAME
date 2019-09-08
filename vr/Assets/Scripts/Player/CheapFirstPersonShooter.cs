@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CheapFirstPersonShooter : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class CheapFirstPersonShooter : MonoBehaviour
     GameObject cam; //first person view, for both Controller and VR support
     Rigidbody body;
     public bool VR_Mode;
+
+    #region UI
+    public GameObject reloadUI;
+    public Text shotsRemaining;
+    public Text totalAmmo;
+    #endregion
     #region First Person Controller
     //Movement for Controller Support
     public float jumpHeight = 5;
@@ -49,10 +56,23 @@ public class CheapFirstPersonShooter : MonoBehaviour
     public float cameraRotateSpeed;
     #endregion
 
+
+    #region Weapons
+    //Shooting and Bullets
+    public Transform bulletSpawn;
+    public GameObject bulletPrefab;
+
+    public GameObject[] weaponsInGame;
+    public Queue<GameObject> currentWeapons = new Queue<GameObject>();
+    Queue<GameObject> weaponHolster = new Queue<GameObject>();
+    public float equipedWeaponReloadTime;
+
+    public bool canShoot;
+    public bool pickedUpShotgun = false;
+    public bool pickedUpAK = false;
+    #endregion
+
     #region Area Progression
-    //stuff for moving around our level and level progression
-    public GameObject[] enemies;
-    public GameObject[] positions;
 
     #region AreaOne
     //Zombie Conditions
@@ -70,32 +90,23 @@ public class CheapFirstPersonShooter : MonoBehaviour
     int areaTwoFail = 4;
     #endregion
 
+    //stuff for moving around our level and level progression
+    public GameObject[] enemies;
+    public GameObject[] positions;
     #endregion
-
-    #region Weapons
-    //Shooting and Bullets
-    public Transform bulletSpawn;
-    public GameObject bulletPrefab;
-
-    public GameObject[] weaponsInGame;
-    public Queue<GameObject> currentWeapons = new Queue<GameObject>();
-    Queue<GameObject> weaponHolster = new Queue<GameObject>();
-
-    public bool pickedUpShotgun = false;
-    public bool pickedUpAK = false;
-    #endregion
-
 
     // Start is called before the first frame update
     void Start()
     {
+        reloadUI.SetActive(false);
         cam = this.gameObject;
         body = character.GetComponent<Rigidbody>();
         enemies = GameObject.FindGameObjectsWithTag("Enemies");
         currentWeapons.Enqueue(weaponsInGame[0]);
         currentWeapons.Peek().gameObject.SetActive(true);
+        //totalAmmo.text = "Total Ammo: 100";
+        //shotsRemaining.text = "Ammo: 7";
     }
-
     void Look()
     {
         xRotation += r_Y * sensitivity;
@@ -116,7 +127,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
         r_X = Input.GetAxis("Mouse X");
         r_Y = Input.GetAxis("Mouse Y");
 
-
+        SetAmmoUI();
         SwitchWeapons();
         if (r_X > DeadZone || r_X < -DeadZone || r_Y > DeadZone || r_Y < -DeadZone)
         {
@@ -144,20 +155,22 @@ public class CheapFirstPersonShooter : MonoBehaviour
         }
         #endregion
 
-        //for some reason the shotgun broke using this logic, will try to fix, it will equip but wont fire
-        if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Space))
         {
             if (currentWeapons.Peek().gameObject.tag == "Pistol")
             {
                 currentWeapons.Peek().gameObject.GetComponent<Pistol>().Shooting();
+                equipedWeaponReloadTime = currentWeapons.Peek().gameObject.GetComponent<Pistol>().reloadTime;
             }
             else if (currentWeapons.Peek().gameObject.tag == "Shotgun")
             {
                 currentWeapons.Peek().gameObject.GetComponent<Shotgun>().Shooting();
+                equipedWeaponReloadTime = currentWeapons.Peek().gameObject.GetComponent<Shotgun>().reloadTime;
             }
             else if (currentWeapons.Peek().gameObject.tag == "AK47")
             {
                 currentWeapons.Peek().gameObject.GetComponent<AK47>().Shooting();
+                equipedWeaponReloadTime = currentWeapons.Peek().gameObject.GetComponent<AK47>().reloadTime;
             }
         }
         if (Input.GetButtonDown("Jump") && jump <= 1)
@@ -255,6 +268,24 @@ public class CheapFirstPersonShooter : MonoBehaviour
         character.transform.Translate(Vector3.right * Time.deltaTime * m_LR * (p_speed));
         character.transform.Translate(Vector3.forward * Time.deltaTime * m_FB * p_speed);
         
+    }
+    void SetAmmoUI()
+    {
+        if (currentWeapons.Peek().gameObject.tag == "Pistol")
+        {
+            totalAmmo.text = "Total Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Pistol>().ammo.ToString();
+            shotsRemaining.text = "Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Pistol>().ammoInClip.ToString();
+        }
+        else if (currentWeapons.Peek().gameObject.tag == "Shotgun")
+        {
+            totalAmmo.text = "Total Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Shotgun>().ammo.ToString();
+            shotsRemaining.text = "Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Shotgun>().ammoInClip.ToString();
+        }
+        else if (currentWeapons.Peek().gameObject.tag == "AK47")
+        {
+            totalAmmo.text = "Total Ammo: " + currentWeapons.Peek().gameObject.GetComponent<AK47>().ammo.ToString();
+            shotsRemaining.text = "Ammo: " + currentWeapons.Peek().gameObject.GetComponent<AK47>().ammoInClip.ToString();
+        }
     }
 
     void HeadBob()

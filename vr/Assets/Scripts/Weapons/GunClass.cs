@@ -11,20 +11,23 @@ public class GunClass : MonoBehaviour
     public float reloadTime;
     public float shootingSpeed;
     public float bulletSpeed;
+    public float bulDist;
     public bool canShoot = true;
+    public bool reloading = false;
     public int clipsUsed;
     public GameObject bulletPrefab;
     public Transform bulletSpawn;
     public CheapFirstPersonShooter playerScript;
     public Animation anim;
     public ParticleSystem particle;
+  
 
     private void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CheapFirstPersonShooter>();
     }
 
-    public void Stats(string newName, int newMaxClip, int newAmmoInClip, int newAmmo, float newReloadTime, float newShootingSpeed, float newBulletSpeed)
+    public void Stats(string newName, int newMaxClip, int newAmmoInClip, int newAmmo, float newReloadTime, float newShootingSpeed, float newBulletSpeed, float bulletLife)
     {
         type = newName;
         ammo = newAmmo;
@@ -33,25 +36,31 @@ public class GunClass : MonoBehaviour
         reloadTime = newReloadTime;
         shootingSpeed = newShootingSpeed;
         bulletSpeed = newBulletSpeed;
+        bulDist = bulletLife;
     }
 
-    public void Shooting()
+    private void Update()
     {
-        if(ammoInClip >= 1 && canShoot)
+        if (ammoInClip <= 0)
         {
-            StartCoroutine(ShootingSpeed(shootingSpeed));
-        }    
-        else if(ammoInClip <= 0)
-        {
+            reloading = true;
             StartCoroutine(Reload(reloadTime));
         }
     }
+    public void Shooting()
+    {
+        if(ammoInClip >= 1 && canShoot && !reloading)
+        {
+            StartCoroutine(ShootingSpeed(shootingSpeed));
+        }    
+    }
 
     public void Shoot()
-    {
+    {   
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, transform.rotation);
         bullet.GetComponent<Bullet>().thrust = bulletSpeed;
         bullet.GetComponent<Bullet>().Fired();
+        ammo -= 1;
     }
 
     IEnumerator ShootingSpeed(float x)
@@ -64,17 +73,17 @@ public class GunClass : MonoBehaviour
         }
         canShoot = false;
         ammoInClip -= 1;
-        Debug.Log("here");
         yield return new WaitForSeconds(x);
-        Debug.Log("there");
         canShoot = true;
     }
 
     IEnumerator Reload(float x)
     {
-        //ammo -= maxClipSize;
-        yield return new WaitForSeconds(x);
+        playerScript.reloadUI.SetActive(true);
         ammoInClip = maxClipSize;
+        yield return new WaitForSeconds(x);
+        reloading = false;
+        playerScript.reloadUI.SetActive(false);
     }
 
     IEnumerator MuzzleFlare(float x)

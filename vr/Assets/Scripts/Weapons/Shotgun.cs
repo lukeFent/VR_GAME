@@ -7,6 +7,6 @@ public class Shotgun : GunClass
     private void Start()
     {
         anim = this.gameObject.GetComponent<Animation>();
-        Stats("Shotgun", 2, 2, 12, 0, 0.2f, 80);
+        Stats("Shotgun", 1, 1, 12, 1.8f, 0, 80, 0.8f);
     }
 }

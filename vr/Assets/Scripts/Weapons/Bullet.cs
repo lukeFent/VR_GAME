@@ -6,10 +6,12 @@ public class Bullet : MonoBehaviour
 {
     public float thrust; 
     private Rigidbody body;
+    public float distance;
 
     private void Start()
     {
         body = GetComponent<Rigidbody>();
+        StartCoroutine(KillBullet(distance));
     }
 
     public void Fired()
@@ -31,9 +33,9 @@ public class Bullet : MonoBehaviour
             other.transform.GetComponent<InteractClass>().Interact(direction);
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
+    IEnumerator KillBullet(float x)
     {
+        yield return new WaitForSeconds(x);
         Destroy(this.gameObject);
     }
 }
