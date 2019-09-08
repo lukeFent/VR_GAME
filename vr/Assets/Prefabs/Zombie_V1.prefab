@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 949931777129172404}
   - component: {fileID: 949931777129172403}
   - component: {fileID: 949931777129172400}
+  - component: {fileID: 3223719757041315366}
   m_Layer: 0
   m_Name: Zombie_V1
   m_TagString: Untagged
@@ -79,7 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 670ebbf4b1a9348039b5f7dc6a68538a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ani: {fileID: 949931777129172404}
   ragDoll:
   - {fileID: 2141509960768818935}
   - {fileID: 3103754920212807701}
@@ -93,7 +93,6 @@ MonoBehaviour:
   - {fileID: 8041782059304502763}
   - {fileID: 8041782059304502763}
   box: {fileID: 6279889554915016311}
-  TurnOn: 1
 --- !u!65 &6279889554915016311
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -165,12 +164,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8300defd438642b185fe74ba5f6bc59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
   bodyGuards: []
   raycastPoint: {fileID: 949931777096874720}
+  zombie: {fileID: 0}
+--- !u!114 &3223719757041315366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5937968216456287575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35a6a0ecd17fc4e88a6ed17dd1076947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ragdoll: {fileID: 0}
+  agent: {fileID: 0}
   anim: {fileID: 0}
-  raggy: {fileID: 0}
-  distancesToObjects: []
 --- !u!54 &2495035191171395986
 Rigidbody:
   m_ObjectHideFlags: 0

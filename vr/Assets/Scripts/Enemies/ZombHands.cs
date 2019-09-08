@@ -8,7 +8,7 @@ public class ZombHands : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.GetComponent<InteractClass>())
+        if (other.transform.GetComponent<BodyInteract>())
         {
             Vector3 heading = transform.position - other.transform.position;
             float distance = heading.magnitude;

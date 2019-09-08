@@ -5,73 +5,65 @@ using UnityEngine.AI;
 
 public class NavMesh_Zomb : MonoBehaviour
 {
-    public NavMeshAgent agent;
     public BodyInteract[] bodyGuards;
     int layerMask = 1 << 9;
     public Transform raycastPoint;
-    public Animator anim;
-    public RagDollController raggy; 
 
+
+    public bool kill = false; 
+
+    public ZombInteract zombie; 
 
     // Start is called before the first frame update
     void Start()
     {
-        raggy = GetComponent<RagDollController>();
+
+        zombie = GetComponent<ZombInteract>();
         bodyGuards = FindObjectsOfType<BodyInteract>();
-        agent = GetComponent<NavMeshAgent>();
-
-        if (!anim)
-        { 
-        anim = GetComponentInChildren<Animator>();
-        }
-
-     
         HeadToClosestBody();
+
     }
 
    
 
     private void FixedUpdate()
     {
-        DrawRay();
+        if (isBodyInFront())
+            Attack();
 
-
-        if(raggy.TurnOn == false)
+        if(kill)
         {
-            agent.enabled = false; 
+            zombie.Interact(Vector3.zero);
+            kill = false;
         }
     }
 
 
     void Attack()
     {
-        agent.isStopped = true;
-        anim.SetTrigger("Attack");
+        zombie.agent.isStopped = true;
+        zombie.anim.SetTrigger("Attack");
         StartCoroutine(WaitASec());
 
 
 
     }
 
-    void DrawRay()
+    bool isBodyInFront()
     {
         Vector3 fwd = raycastPoint.position + raycastPoint.forward * 1f;
 
         Debug.DrawLine(raycastPoint.position, fwd);
 
-        if(Physics.Linecast(raycastPoint.position, fwd, layerMask))
-        {
-
-            Attack();
-
-        }
+        return Physics.Linecast(raycastPoint.position, fwd, layerMask);
+        
     }
 
     void HeadToClosestBody()
     {
         Vector3 closestBody = GetClosestBody().position;
-        agent.SetDestination(closestBody);
-        anim.SetTrigger("Run");
+        zombie.agent.SetDestination(closestBody);
+        zombie.anim.SetTrigger("Run");
 
         transform.LookAt(closestBody);
 
@@ -123,9 +115,15 @@ public class NavMesh_Zomb : MonoBehaviour
     IEnumerator WaitASec()
     {
         yield return new WaitForSeconds(2f);
-        anim.ResetTrigger("Attack");
+        zombie.anim.ResetTrigger("Attack");
+
+        if(isBodyInFront())
+        {
+            Attack();
+            yield break; 
+        }
+        
         HeadToClosestBody();
-        yield break;
     }
 
 }
