@@ -24,8 +24,6 @@ public class NavMesh_Zomb : MonoBehaviour
 
     }
 
-   
-
     private void FixedUpdate()
     {
         if (isBodyInFront())
@@ -44,9 +42,6 @@ public class NavMesh_Zomb : MonoBehaviour
         zombie.agent.isStopped = true;
         zombie.anim.SetTrigger("Attack");
         StartCoroutine(WaitASec());
-
-
-
     }
 
     bool isBodyInFront()

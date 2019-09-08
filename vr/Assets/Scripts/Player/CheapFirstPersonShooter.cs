@@ -15,14 +15,24 @@ public class CheapFirstPersonShooter : MonoBehaviour
     public GameObject reloadUI;
     public Text shotsRemaining;
     public Text totalAmmo;
+    public Text zombiesKilled;
+    public Text peopleKilled;
+    public GameObject outOfAmmo;
+    public GameObject AreaClear;
+
+    bool clearedOne = true;
+    bool clearedTwo = true;
+    bool clearedThree = true;
+    bool cleared = false;
+
     #endregion
     #region First Person Controller
     //Movement for Controller Support
-    public float jumpHeight = 5;
-    public float m_FB;
-    public float m_LR;
-    public float p_speed = 6;
-    public float p_MS = 20;
+    float jumpHeight = 5;
+    float m_FB;
+    float m_LR;
+    float p_speed = 6;
+    float p_MS = 20;
 
     //Not Currently in use
     bool IsGrounded;
@@ -47,9 +57,9 @@ public class CheapFirstPersonShooter : MonoBehaviour
 
     //First Person Headbob 
     [Range(0, 4)]
-    public float h_drop;
+    float h_drop;
     [Range(0, 4)]
-    public float h_rise;
+    float h_rise;
 
     //Camera Rotate on movePosition()
     [Range(1, 5)]
@@ -57,30 +67,16 @@ public class CheapFirstPersonShooter : MonoBehaviour
     #endregion
 
 
-    #region Weapons
-    //Shooting and Bullets
-    public Transform bulletSpawn;
-    public GameObject bulletPrefab;
-
-    public GameObject[] weaponsInGame;
-    public Queue<GameObject> currentWeapons = new Queue<GameObject>();
-    Queue<GameObject> weaponHolster = new Queue<GameObject>();
-    public float equipedWeaponReloadTime;
-
-    public bool canShoot;
-    public bool pickedUpShotgun = false;
-    public bool pickedUpAK = false;
-    #endregion
 
     #region Area Progression
 
+    public int deadEnemies;
+    public int deadPeople;
     #region AreaOne
     //Zombie Conditions
     int areaOneClear = 3;
-    public int deadEnemies;
     //People Conditions
     int areaOneFail = 3;
-    public int deadPeople;
     #endregion
 
     #region AreaTwo
@@ -90,22 +86,36 @@ public class CheapFirstPersonShooter : MonoBehaviour
     int areaTwoFail = 4;
     #endregion
 
+    #region AreaThree
+    int areaThreeClear = 12;
+    int areThreeFail = 6;
+    #endregion
+
     //stuff for moving around our level and level progression
     public GameObject[] enemies;
     public GameObject[] positions;
+    #endregion
+    #region Weapons
+    public GameObject[] weaponsInGame;
+    public Queue<GameObject> currentWeapons = new Queue<GameObject>();
+    Queue<GameObject> weaponHolster = new Queue<GameObject>();
+    public float equipedWeaponReloadTime;
+
+    bool isReloading;
+    bool pickedUpShotgun = false;
+    bool pickedUpAK = false;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         reloadUI.SetActive(false);
+        outOfAmmo.SetActive(false);
         cam = this.gameObject;
         body = character.GetComponent<Rigidbody>();
         enemies = GameObject.FindGameObjectsWithTag("Enemies");
         currentWeapons.Enqueue(weaponsInGame[0]);
         currentWeapons.Peek().gameObject.SetActive(true);
-        //totalAmmo.text = "Total Ammo: 100";
-        //shotsRemaining.text = "Ammo: 7";
     }
     void Look()
     {
@@ -127,8 +137,18 @@ public class CheapFirstPersonShooter : MonoBehaviour
         r_X = Input.GetAxis("Mouse X");
         r_Y = Input.GetAxis("Mouse Y");
 
-        SetAmmoUI();
+        SetUI();
         SwitchWeapons();
+
+        //this is strictly for testing
+        if(deadEnemies < areaOneClear)
+        {
+            clearedOne = true;
+            clearedTwo = true;
+            clearedThree = true;
+        }
+        //end of test function
+
         if (r_X > DeadZone || r_X < -DeadZone || r_Y > DeadZone || r_Y < -DeadZone)
         {
             Look();
@@ -141,16 +161,11 @@ public class CheapFirstPersonShooter : MonoBehaviour
                 HeadBob();
                 Move();
             }
-            else if (m_LR < DeadZone || m_LR > -DeadZone || m_FB < DeadZone || m_FB > -DeadZone)
-            {
-
-            }
         }
 
         #region VR Movement and Weapon funtions
         if (VR_Mode)
         {
-
             MovePosition();
         }
         #endregion
@@ -232,7 +247,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
                     pickedUpAK = true;
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha1) && pickedUpShotgun)
+            if (Input.GetKeyDown(KeyCode.Alpha1) && pickedUpShotgun && !isReloading)
             {
                 weaponHolster.Enqueue(currentWeapons.Peek().gameObject);
                 currentWeapons.Peek().gameObject.SetActive(false);
@@ -269,29 +284,68 @@ public class CheapFirstPersonShooter : MonoBehaviour
         character.transform.Translate(Vector3.forward * Time.deltaTime * m_FB * p_speed);
         
     }
-    void SetAmmoUI()
-    {
-        if (currentWeapons.Peek().gameObject.tag == "Pistol")
-        {
-            totalAmmo.text = "Total Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Pistol>().ammo.ToString();
-            shotsRemaining.text = "Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Pistol>().ammoInClip.ToString();
-        }
-        else if (currentWeapons.Peek().gameObject.tag == "Shotgun")
-        {
-            totalAmmo.text = "Total Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Shotgun>().ammo.ToString();
-            shotsRemaining.text = "Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Shotgun>().ammoInClip.ToString();
-        }
-        else if (currentWeapons.Peek().gameObject.tag == "AK47")
-        {
-            totalAmmo.text = "Total Ammo: " + currentWeapons.Peek().gameObject.GetComponent<AK47>().ammo.ToString();
-            shotsRemaining.text = "Ammo: " + currentWeapons.Peek().gameObject.GetComponent<AK47>().ammoInClip.ToString();
-        }
-    }
 
     void HeadBob()
     {
       cam.transform.position = new Vector3(cam.transform.position.x, Mathf.Lerp(h_drop, h_rise, Mathf.PingPong(Time.time, 0.3f)), cam.transform.position.z);
     }
+
+    void SetUI()
+    {
+        if (currentWeapons.Count >= 1)
+        {
+            if (currentWeapons.Peek().gameObject.tag == "Pistol")
+            {
+                totalAmmo.text = "Total Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Pistol>().ammo.ToString();
+                shotsRemaining.text = "Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Pistol>().ammoInClip.ToString();
+                isReloading = currentWeapons.Peek().gameObject.GetComponent<Pistol>().reloading;
+                if (currentWeapons.Peek().gameObject.GetComponent<Pistol>().ammo == 0)
+                {
+                    outOfAmmo.SetActive(true);
+                }
+                if (currentWeapons.Peek().gameObject.GetComponent<Pistol>().ammo > 0)
+                {
+                    outOfAmmo.SetActive(false);
+                }
+            }
+            else if (currentWeapons.Peek().gameObject.tag == "Shotgun")
+            {
+                totalAmmo.text = "Total Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Shotgun>().ammo.ToString();
+                shotsRemaining.text = "Ammo: " + currentWeapons.Peek().gameObject.GetComponent<Shotgun>().ammoInClip.ToString();
+                isReloading = currentWeapons.Peek().gameObject.GetComponent<Shotgun>().reloading;
+                if (currentWeapons.Peek().gameObject.GetComponent<Shotgun>().ammo == 0)
+                {
+                    outOfAmmo.SetActive(true);
+                }
+                if (currentWeapons.Peek().gameObject.GetComponent<Shotgun>().ammo > 0)
+                {
+                    outOfAmmo.SetActive(false);
+                }
+            }
+            else if (currentWeapons.Peek().gameObject.tag == "AK47")
+            {
+                totalAmmo.text = "Total Ammo: " + currentWeapons.Peek().gameObject.GetComponent<AK47>().ammo.ToString();
+                shotsRemaining.text = "Ammo: " + currentWeapons.Peek().gameObject.GetComponent<AK47>().ammoInClip.ToString();
+                isReloading = currentWeapons.Peek().gameObject.GetComponent<AK47>().reloading;
+                if (currentWeapons.Peek().gameObject.GetComponent<AK47>().ammo == 0)
+                {
+                    outOfAmmo.SetActive(true);
+                }
+                if (currentWeapons.Peek().gameObject.GetComponent<AK47>().ammo > 0)
+                {
+                    outOfAmmo.SetActive(false);
+                }
+            }
+        }
+        zombiesKilled.text = "Zombies Killed: " + deadEnemies;
+        peopleKilled.text = "People Killed: " + deadPeople;
+
+        if(clearedOne && deadEnemies >= areaOneClear && deadEnemies < areaTwoClear || clearedTwo && deadEnemies >= areaTwoClear && deadEnemies < areaThreeClear || clearedThree && deadEnemies >= areaThreeClear)
+        {
+            StartCoroutine(AreaCleared());
+        }
+    }
+
 
     private void OnCollisionEnter(Collision c)
     {
@@ -299,6 +353,25 @@ public class CheapFirstPersonShooter : MonoBehaviour
         {
             IsGrounded = true;
             jump = 0;
+        }
+    }
+
+    IEnumerator AreaCleared()
+    {
+        AreaClear.SetActive(true);
+        yield return new WaitForSeconds(4);
+        AreaClear.SetActive(false);
+        if (deadEnemies >= areaOneClear && deadEnemies < areaTwoClear)
+        {
+            clearedOne = false;
+        }
+        if (deadEnemies >= areaTwoClear && deadEnemies < areaThreeClear)
+        {
+            clearedTwo = false;
+        }
+        if (deadEnemies >= areaThreeClear)
+        {
+            clearedThree = false;
         }
     }
 }

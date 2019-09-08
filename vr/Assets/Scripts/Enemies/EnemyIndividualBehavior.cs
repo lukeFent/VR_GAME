@@ -37,8 +37,7 @@ public class EnemyIndividualBehavior : MonoBehaviour
     {
         if(life <= 0)
         {
-            //playerScript.deadEnemies += 1;
-            Destroy(this.gameObject);
+            playerScript.deadEnemies += 1;
         }
     }
 }

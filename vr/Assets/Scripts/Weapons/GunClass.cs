@@ -41,10 +41,18 @@ public class GunClass : MonoBehaviour
 
     private void Update()
     {
-        if (ammoInClip <= 0)
+        if (ammoInClip <= 0 && ammo > 0)
         {
             reloading = true;
             StartCoroutine(Reload(reloadTime));
+        }
+        if(ammoInClip >= ammo)
+        {
+            ammoInClip = ammo;
+        }
+        if(ammo <= 0)
+        {
+            ammoInClip = 0;
         }
     }
     public void Shooting()

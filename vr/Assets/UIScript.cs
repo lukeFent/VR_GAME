@@ -19,8 +19,14 @@ public class UIScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        r_Text.color = Color.Lerp(r_color, Color.black, Mathf.PingPong(Time.time,1));
+        if (gameObject.tag == "Reloading")
+        {
+            r_Text.color = Color.Lerp(r_color, Color.black, Mathf.PingPong(Time.time, 1));
+        }
+        else
+        {
+            r_Text.color = Color.Lerp(r_color, Color.red, Mathf.PingPong(Time.time, 1));
+        }
     }
 
 }

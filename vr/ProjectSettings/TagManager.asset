@@ -12,6 +12,9 @@ TagManager:
   - Pistol
   - Shotgun
   - AK47
+  - weapon
+  - Reloading
+  - AreaClear
   layers:
   - Default
   - TransparentFX
