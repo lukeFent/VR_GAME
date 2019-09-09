@@ -12,16 +12,23 @@ public class Areas : MonoBehaviour
     GameObject[] areas;
     public float respawnTimer = 1;
     bool onlyOne = false;
+    public AudioSource bg_Music;
+    public float bgM_Volume;
 
+    private void Start()
+    {
+        
+    }
     void Update()
     {
-        foreach (var z in zombies)
-        {
-            if (z.GetComponent<NavMesh_Zomb>().kill)
-            {
-               Respawn(z);
-            }
-        }
+        bg_Music.volume = bgM_Volume;
+        //foreach (var z in zombies)
+        //{
+        //    if (z.GetComponent<NavMesh_Zomb>().kill)
+        //    {
+        //       Respawn(z);
+        //    }
+        //}
     }
 
     void Respawn(GameObject z)

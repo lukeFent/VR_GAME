@@ -13,7 +13,9 @@ public class NavMesh_Zomb : MonoBehaviour
     public int life;
     public float speed;
     public ZombInteract zombie;
-
+    public bool activate = false;
+    public AudioClip[] z_Noises;
+    public AudioSource z_Sound;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class NavMesh_Zomb : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         zombie.agent.speed = speed;
         if (kill)
         {
@@ -37,6 +40,7 @@ public class NavMesh_Zomb : MonoBehaviour
         }
         if (isBodyInFront())
             Attack();
+
     }
 
 
@@ -44,8 +48,12 @@ public class NavMesh_Zomb : MonoBehaviour
     {
         zombie.agent.isStopped = true;
         zombie.anim.SetTrigger("Attack");
+        if (!z_Sound.isPlaying)
+        {
+            int i = Random.Range(0, z_Noises.Length);
+            z_Sound.PlayOneShot(z_Noises[i]);
+        }
         StartCoroutine(LookAround());
-
 
 
     }
@@ -65,7 +73,7 @@ public class NavMesh_Zomb : MonoBehaviour
 
         zombie.anim.applyRootMotion = false;
 
-
+     
         //transform.LookAt(closestBody);
 
         zombie.agent.isStopped = false;
@@ -77,7 +85,7 @@ public class NavMesh_Zomb : MonoBehaviour
     {
         List<Transform> bodyPositions = new List<Transform>();
 
-
+      
         for (int i = 0; i < bodyGuards.Length; i++)
         {
             if (!bodyGuards[i].hit)
