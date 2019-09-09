@@ -27,10 +27,10 @@ public class Bullet : MonoBehaviour
             body.mass = 1;
             Vector3 heading = transform.position - other.transform.position;
             float distance = heading.magnitude;
-            Vector3 direction = heading / distance; 
-
+            Vector3 direction = heading / distance;
 
             other.transform.GetComponent<InteractClass>().Interact(direction);
+            other.GetComponent<NavMesh_Zomb>().kill = true;
         }
     }
     IEnumerator KillBullet(float x)

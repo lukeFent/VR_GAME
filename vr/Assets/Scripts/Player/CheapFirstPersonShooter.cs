@@ -134,8 +134,8 @@ public class CheapFirstPersonShooter : MonoBehaviour
     {
         m_LR = Input.GetAxis("Horizontal");
         m_FB = Input.GetAxis("Vertical");
-        r_X = Input.GetAxis("Mouse X");
-        r_Y = Input.GetAxis("Mouse Y");
+        r_X = Input.GetAxis("Mouse X") + Input.GetAxis("CamX");
+        r_Y = Input.GetAxis("Mouse Y") + Input.GetAxis("CamY");
 
         SetUI();
         SwitchWeapons();
@@ -160,6 +160,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
             {
                 HeadBob();
                 Move();
+                Look();
             }
         }
 
@@ -169,7 +170,6 @@ public class CheapFirstPersonShooter : MonoBehaviour
             MovePosition();
         }
         #endregion
-
         if (Input.GetButtonDown("Fire1") || Input.GetKeyDown(KeyCode.Space))
         {
             if (currentWeapons.Peek().gameObject.tag == "Pistol")

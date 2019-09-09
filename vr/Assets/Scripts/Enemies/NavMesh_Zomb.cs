@@ -10,7 +10,8 @@ public class NavMesh_Zomb : MonoBehaviour
     public Transform raycastPoint;
 
     public bool kill = false;
-
+    public int life;
+    public float speed;
     public ZombInteract zombie;
 
     // Start is called before the first frame update
@@ -22,19 +23,16 @@ public class NavMesh_Zomb : MonoBehaviour
         HeadToClosestBody(GetClosestBody().position);
 
     }
-
+      
+    
 
 
     private void FixedUpdate()
     {
+        zombie.agent.speed = speed;
+
         if (isBodyInFront())
             Attack();
-
-        if (kill)
-        {
-            zombie.Interact(Vector3.zero);
-            kill = false;
-        }
     }
 
 
@@ -74,9 +72,6 @@ public class NavMesh_Zomb : MonoBehaviour
     Transform GetClosestBody()
     {
         List<Transform> bodyPositions = new List<Transform>();
-
-
-
 
 
         for (int i = 0; i < bodyGuards.Length; i++)

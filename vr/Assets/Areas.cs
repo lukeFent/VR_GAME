@@ -6,6 +6,7 @@ public class Areas : MonoBehaviour
 {
 
     public GameObject[] zombies;
+    public GameObject zombie;
     public Transform[] spawnPoints;
     public GameObject[] people;
     GameObject[] areas;
@@ -18,7 +19,7 @@ public class Areas : MonoBehaviour
         {
             if (z.GetComponent<NavMesh_Zomb>().kill)
             {
-               // Respawn(z);
+               Respawn(z);
             }
         }
     }
@@ -33,6 +34,7 @@ public class Areas : MonoBehaviour
     IEnumerator RTimer(float timer, GameObject z, int i)
     {
         yield return new WaitForSeconds(timer);
-        z.transform.position = spawnPoints[i].transform.position;
+        GameObject argh = Instantiate(zombie, spawnPoints[i].position, transform.rotation);
+        Destroy(z.gameObject);
     }
 }

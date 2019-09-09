@@ -66,6 +66,7 @@ public class GunClass : MonoBehaviour
     public void Shoot()
     {   
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, transform.rotation);
+        bullet.GetComponent<Bullet>().distance = bulDist;
         bullet.GetComponent<Bullet>().thrust = bulletSpeed;
         bullet.GetComponent<Bullet>().Fired();
         ammo -= 1;
