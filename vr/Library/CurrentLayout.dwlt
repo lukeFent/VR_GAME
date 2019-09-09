@@ -21,7 +21,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 5}
-  m_MinSize: {x: 950, y: 374}
+  m_MinSize: {x: 950, y: 398}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 204
     height: 891
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 204, y: 224}
+  m_MaxSize: {x: 4004, y: 4024}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -95,10 +95,10 @@ MonoBehaviour:
     y: 30
     width: 1280
     height: 891
-  m_MinSize: {x: 911, y: 324}
-  m_MaxSize: {x: 22008, y: 10024}
+  m_MinSize: {x: 917, y: 348}
+  m_MaxSize: {x: 22012, y: 10024}
   vertical: 1
-  controlID: 2329
+  controlID: 172
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -121,7 +121,7 @@ MonoBehaviour:
     y: 0
     width: 1280
     height: 941
-  m_MinSize: {x: 950, y: 374}
+  m_MinSize: {x: 950, y: 398}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &6
 MonoBehaviour:
@@ -189,10 +189,10 @@ MonoBehaviour:
     y: 0
     width: 1280
     height: 891
-  m_MinSize: {x: 911, y: 324}
-  m_MaxSize: {x: 22008, y: 10024}
+  m_MinSize: {x: 917, y: 348}
+  m_MaxSize: {x: 22012, y: 10024}
   vertical: 0
-  controlID: 2330
+  controlID: 173
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -214,10 +214,10 @@ MonoBehaviour:
     y: 0
     width: 565
     height: 891
-  m_MinSize: {x: 200, y: 324}
-  m_MaxSize: {x: 4002, y: 8024}
+  m_MinSize: {x: 202, y: 348}
+  m_MaxSize: {x: 4002, y: 8048}
   vertical: 1
-  controlID: 153
+  controlID: 38
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -237,8 +237,8 @@ MonoBehaviour:
     y: 0
     width: 565
     height: 401
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 124}
+  m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -265,8 +265,8 @@ MonoBehaviour:
     y: 401
     width: 565
     height: 490
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 224}
+  m_MaxSize: {x: 4002, y: 4024}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -410,9 +410,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.061925143, y: 0.5855942, z: -36.597824}
+    m_Target: {x: 281.5, y: 226.5, z: -7.5}
     speed: 2
-    m_Value: {x: 0.061925143, y: 0.5855942, z: -36.597824}
+    m_Value: {x: 281.5, y: 226.5, z: -7.5}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -444,9 +444,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 1.9155613
+    m_Target: 1192.5781
     speed: 2
-    m_Value: 1.9155613
+    m_Value: 1192.5781
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -623,20 +623,20 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 7a7dfeff
-      m_LastClickedID: -98950
-      m_ExpandedIDs: 8087feff30bc0000d0bc000008bd000016bd00002ebd000056bd000078bd00007cbd0000
+      m_SelectedIDs: a63c0000
+      m_LastClickedID: 15526
+      m_ExpandedIDs: cefbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: AK-47
-        m_OriginalName: AK-47
+        m_Name: Body
+        m_OriginalName: Body
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -315148
+        m_UserData: 15378
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
         m_OriginalEventType: 0
@@ -687,7 +687,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/ImportedAssets/Weapons Pack(LOW POLY)
+    - Assets/ImportedAssets
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
@@ -699,7 +699,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: f02a0000
     m_LastClickedID: 10992
-    m_ExpandedIDs: 00000000765d000028690000fab5000074b60000aeb60000d4b600005eb70000a2b70000acb70000f6b700001eb800002ab8000034b8000082b80000dcb800003eb9000068b9000094b90000fcb9000056ba000058ba000070ba000072ba00009aba0000a2ba0000f6ba00004ebb000052bb0000c6bb0000ccbb0000febb000072cb000074cb000076cb000078cb00007acb00007ccb00007ecb000080cb000082cb000084cb000086cb000088cb0000
+    m_ExpandedIDs: 00000000f42900003a2a0000b42a0000ee2a00004a2b0000902b00009c2b00008a2d0000002e00000e2e0000262f0000a02f0000cc2f0000463100000a3200007c320000de320000363500004c350000ce350000f2350000f435000034360000363600009036000064370000023800006e390000903900007a5600007c5600007e56000080560000825600008456000086560000885600008a5600008c5600008e56000090560000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -727,21 +727,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000fab500001ab6000054b6000074b60000aeb60000cab60000d4b600005eb70000a2b70000acb70000f6b700001eb8000034b80000dcb800003eb9000068b9000094b90000fcb9000040ba000056ba000058ba000070ba000072ba00009aba0000f6ba000052bb0000c6bb0000ccbb000072cb000074cb000076cb000078cb00007acb00007ccb00007ecb000080cb000082cb000084cb000086cb000088cb0000b8cb0000
+    m_ExpandedIDs: ffffffff00000000f42900003a2a0000ee2a00004a2b0000902b00009c2b00008a2d0000002e00000e2e0000262f0000a02f0000cc2f0000463100000a3200007c320000de320000363500004c350000ce350000f2350000f4350000343600003636000064370000023800006e390000903900007a5600007c5600007e56000080560000825600008456000086560000885600008a5600008c5600008e56000090560000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: zapsplat_foley_footstep_single_shoe_in_compacted_dirt_010_39545
-      m_OriginalName: zapsplat_foley_footstep_single_shoe_in_compacted_dirt_010_39545
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 172286
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 2}
     m_SearchString: 
