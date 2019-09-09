@@ -16,6 +16,7 @@ public class ZombHands : MonoBehaviour
 
             
             other.transform.GetComponent<InteractClass>().Interact(direction);
+            other.GetComponent<EnemyIndividualBehavior>().kill = true;
         }
     }
 

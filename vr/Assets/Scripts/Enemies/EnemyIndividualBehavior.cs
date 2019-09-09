@@ -7,6 +7,7 @@ public class EnemyIndividualBehavior : MonoBehaviour
     public string enemyName;
     public int life = 2;
     public float speed;
+    public bool kill = false;
     public CheapFirstPersonShooter playerScript;
 
     private void Start()
@@ -16,7 +17,12 @@ public class EnemyIndividualBehavior : MonoBehaviour
 
     private void Update()
     {
-        Death();
+       
+        if (kill)
+        {
+            playerScript.deadPeople += 1;
+            kill = false;
+        }
     }
     public EnemyIndividualBehavior(string newName, int newPower, float newSpeed)
     {

@@ -11,6 +11,13 @@ public class CheapFirstPersonShooter : MonoBehaviour
     Rigidbody body;
     public bool VR_Mode;
 
+    #region Audio
+    public AudioClip[] footSteps;
+    public AudioClip w_Switch;
+    public AudioSource p_Sound;
+    #endregion
+
+
     #region UI
     public GameObject reloadUI;
     public Text shotsRemaining;
@@ -57,9 +64,9 @@ public class CheapFirstPersonShooter : MonoBehaviour
 
     //First Person Headbob 
     [Range(0, 4)]
-    float h_drop;
+    public float h_drop;
     [Range(0, 4)]
-    float h_rise;
+    public float h_rise;
 
     //Camera Rotate on movePosition()
     [Range(1, 5)]
@@ -72,6 +79,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
 
     public int deadEnemies;
     public int deadPeople;
+    public GameObject[] g_Weap;
     #region AreaOne
     //Zombie Conditions
     int areaOneClear = 3;
@@ -217,6 +225,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
             cam.transform.rotation = Quaternion.LookRotation(newDir0);
             HeadBob();
         }
+
     }
 
     void SwitchWeapons()
@@ -231,6 +240,8 @@ public class CheapFirstPersonShooter : MonoBehaviour
                     currentWeapons.Peek().gameObject.SetActive(false);
                     currentWeapons.Dequeue();
                     currentWeapons.Enqueue(weaponsInGame[1].gameObject);
+                    p_Sound.PlayOneShot(w_Switch);
+                    g_Weap[0].SetActive(false);
                     currentWeapons.Peek().gameObject.SetActive(true);
                     pickedUpShotgun = true;
                 }
@@ -243,6 +254,8 @@ public class CheapFirstPersonShooter : MonoBehaviour
                     currentWeapons.Peek().gameObject.SetActive(false);
                     currentWeapons.Dequeue();
                     currentWeapons.Enqueue(weaponsInGame[2].gameObject);
+                    p_Sound.PlayOneShot(w_Switch);
+                    g_Weap[1].SetActive(false);
                     currentWeapons.Peek().gameObject.SetActive(true);
                     pickedUpAK = true;
                 }
@@ -254,6 +267,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
                 currentWeapons.Enqueue(weaponHolster.Peek().gameObject);
                 currentWeapons.Dequeue();
                 weaponHolster.Dequeue();
+                p_Sound.PlayOneShot(w_Switch);
                 currentWeapons.Peek().gameObject.SetActive(true);
             }
         }
@@ -282,12 +296,16 @@ public class CheapFirstPersonShooter : MonoBehaviour
     {
         character.transform.Translate(Vector3.right * Time.deltaTime * m_LR * (p_speed));
         character.transform.Translate(Vector3.forward * Time.deltaTime * m_FB * p_speed);
-        
+        StepSound();
     }
 
     void HeadBob()
     {
       cam.transform.position = new Vector3(cam.transform.position.x, Mathf.Lerp(h_drop, h_rise, Mathf.PingPong(Time.time, 0.3f)), cam.transform.position.z);
+        if (!p_Sound.isPlaying)
+        {
+            StartCoroutine(FootSteps());
+        }
     }
 
     void SetUI()
@@ -356,6 +374,22 @@ public class CheapFirstPersonShooter : MonoBehaviour
         }
     }
 
+    void StepSound()
+    {
+        if (!p_Sound.isPlaying)
+        {
+            p_Sound.pitch += Random.Range(-0.1f, 0.2f);       
+            p_Sound.PlayOneShot(footSteps[0]);
+        }
+    }
+
+    IEnumerator FootSteps()
+    {
+            p_Sound.pitch = Mathf.Lerp(1,1.2f,Mathf.PingPong(Time.time,1));
+            p_Sound.PlayOneShot(footSteps[0]);
+        yield return new WaitForSeconds(0.3f);
+        
+    }
     IEnumerator AreaCleared()
     {
         AreaClear.SetActive(true);

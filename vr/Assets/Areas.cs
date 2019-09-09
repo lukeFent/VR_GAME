@@ -11,7 +11,7 @@ public class Areas : MonoBehaviour
     public GameObject[] people;
     GameObject[] areas;
     public float respawnTimer = 1;
-
+    bool onlyOne = false;
 
     void Update()
     {
@@ -33,8 +33,9 @@ public class Areas : MonoBehaviour
 
     IEnumerator RTimer(float timer, GameObject z, int i)
     {
+
         yield return new WaitForSeconds(timer);
         GameObject argh = Instantiate(zombie, spawnPoints[i].position, transform.rotation);
-        Destroy(z.gameObject);
+
     }
 }

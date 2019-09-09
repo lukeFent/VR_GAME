@@ -30,7 +30,14 @@ public class Bullet : MonoBehaviour
             Vector3 direction = heading / distance;
 
             other.transform.GetComponent<InteractClass>().Interact(direction);
-            other.GetComponent<NavMesh_Zomb>().kill = true;
+            if (other.GetComponent<EnemyIndividualBehavior>())
+            {
+                other.GetComponent<EnemyIndividualBehavior>().kill = true;
+            }
+            if (other.GetComponent<NavMesh_Zomb>())
+            {
+                other.GetComponent<NavMesh_Zomb>().kill = true;
+            }
         }
     }
     IEnumerator KillBullet(float x)

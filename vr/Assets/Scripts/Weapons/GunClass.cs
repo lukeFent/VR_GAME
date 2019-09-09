@@ -20,7 +20,8 @@ public class GunClass : MonoBehaviour
     public CheapFirstPersonShooter playerScript;
     public Animation anim;
     public ParticleSystem particle;
-  
+    public AudioClip[] gunShots;
+    public AudioSource s_Maker;
 
     private void Start()
     {
@@ -75,6 +76,7 @@ public class GunClass : MonoBehaviour
     IEnumerator ShootingSpeed(float x)
     {
         Shoot();
+        s_Maker.PlayOneShot(gunShots[0]);
         anim.Play();
         if (particle != null)
         {
@@ -90,6 +92,8 @@ public class GunClass : MonoBehaviour
     {
         playerScript.reloadUI.SetActive(true);
         ammoInClip = maxClipSize;
+        s_Maker.PlayOneShot(gunShots[2]);
+        s_Maker.PlayOneShot(gunShots[1]);
         yield return new WaitForSeconds(x);
         reloading = false;
         playerScript.reloadUI.SetActive(false);

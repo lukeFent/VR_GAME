@@ -8,7 +8,7 @@ public class NavMesh_Zomb : MonoBehaviour
     public BodyInteract[] bodyGuards;
     int layerMask = 1 << 9;
     public Transform raycastPoint;
-
+    public CheapFirstPersonShooter player;
     public bool kill = false;
     public int life;
     public float speed;
@@ -17,7 +17,7 @@ public class NavMesh_Zomb : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        player = FindObjectOfType<CheapFirstPersonShooter>();
         zombie = GetComponent<ZombInteract>();
         bodyGuards = FindObjectsOfType<BodyInteract>();
         HeadToClosestBody(GetClosestBody().position);
@@ -30,7 +30,11 @@ public class NavMesh_Zomb : MonoBehaviour
     private void FixedUpdate()
     {
         zombie.agent.speed = speed;
-
+        if (kill)
+        {
+            player.deadEnemies += 1;
+            kill = false;
+        }
         if (isBodyInFront())
             Attack();
     }
