@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI; 
+using UnityEngine.AI;
 
 public class NavMesh_Zomb : MonoBehaviour
 {
@@ -9,10 +9,9 @@ public class NavMesh_Zomb : MonoBehaviour
     int layerMask = 1 << 9;
     public Transform raycastPoint;
 
+    public bool kill = false;
 
-    public bool kill = false; 
-
-    public ZombInteract zombie; 
+    public ZombInteract zombie;
 
     // Start is called before the first frame update
     void Start()
@@ -20,16 +19,18 @@ public class NavMesh_Zomb : MonoBehaviour
 
         zombie = GetComponent<ZombInteract>();
         bodyGuards = FindObjectsOfType<BodyInteract>();
-        HeadToClosestBody();
+        HeadToClosestBody(GetClosestBody().position);
 
     }
+
+
 
     private void FixedUpdate()
     {
         if (isBodyInFront())
             Attack();
 
-        if(kill)
+        if (kill)
         {
             zombie.Interact(Vector3.zero);
             kill = false;
@@ -41,27 +42,32 @@ public class NavMesh_Zomb : MonoBehaviour
     {
         zombie.agent.isStopped = true;
         zombie.anim.SetTrigger("Attack");
-        StartCoroutine(WaitASec());
+        StartCoroutine(LookAround());
+
+
+
     }
 
     bool isBodyInFront()
     {
-        Vector3 fwd = raycastPoint.position + raycastPoint.forward * 1f;
+        Vector3 fwd = raycastPoint.position + raycastPoint.forward * 0.5f;
 
         Debug.DrawLine(raycastPoint.position, fwd);
 
         return Physics.Linecast(raycastPoint.position, fwd, layerMask);
-        
+
     }
 
-    void HeadToClosestBody()
+    void HeadToClosestBody(Vector3 closestBody)
     {
-        Vector3 closestBody = GetClosestBody().position;
+
+        zombie.anim.applyRootMotion = false;
+
+
+        //transform.LookAt(closestBody);
+
+        zombie.agent.isStopped = false;
         zombie.agent.SetDestination(closestBody);
-        zombie.anim.SetTrigger("Run");
-
-        transform.LookAt(closestBody);
-
     }
 
 
@@ -70,9 +76,12 @@ public class NavMesh_Zomb : MonoBehaviour
         List<Transform> bodyPositions = new List<Transform>();
 
 
+
+
+
         for (int i = 0; i < bodyGuards.Length; i++)
         {
-            if(!bodyGuards[i].hit)
+            if (!bodyGuards[i].hit)
             {
                 bodyPositions.Add(bodyGuards[i].transform);
 
@@ -80,7 +89,13 @@ public class NavMesh_Zomb : MonoBehaviour
 
         }
 
-        return bodyPositions[GetClosestDistances(bodyPositions)];
+        if (bodyPositions.Count == 0)
+            return null;
+
+        Transform target = bodyPositions[GetClosestDistances(bodyPositions)];
+
+        Debug.Log("Next target is  " + target);
+        return target;
 
     }
 
@@ -90,7 +105,7 @@ public class NavMesh_Zomb : MonoBehaviour
         int distanceIterator = 0;
 
         float initialDistance = Vector3.Distance(transform.position, positions[0].position);
-        
+
         for (int i = 0; i < positions.Count; i++)
         {
             if (Vector3.Distance(transform.position, positions[i].position) < initialDistance)
@@ -102,23 +117,43 @@ public class NavMesh_Zomb : MonoBehaviour
 
         }
 
-     
+
         return distanceIterator;
     }
 
 
-    IEnumerator WaitASec()
+    IEnumerator LookAround()
     {
-        yield return new WaitForSeconds(2f);
-        zombie.anim.ResetTrigger("Attack");
+        zombie.anim.applyRootMotion = true;
+        yield return new WaitForSeconds(0.25f);
+        Debug.Log("Looking around");
 
-        if(isBodyInFront())
+        if (GetClosestBody() != null)
         {
-            Attack();
-            yield break; 
+            Vector3 closestBody = GetClosestBody().position;
+            zombie.anim.ResetTrigger("Attack");
+            float lookAngle = Vector3.Angle(closestBody, transform.forward);
+            zombie.anim.SetFloat("Direction", -lookAngle);
+            Debug.Log("Look angle is " + lookAngle);
+            StartCoroutine(WaitToCharge(closestBody));
+            yield break;
         }
-        
-        HeadToClosestBody();
+
+        Debug.Log("There's no one left for the zombies to kill");
+        StartCoroutine(WaitToCharge(Vector3.zero));
+
+
+
+    }
+
+    IEnumerator WaitToCharge(Vector3 target)
+    {
+        Debug.Log("Waiting to attack");
+        zombie.anim.SetTrigger("Run");
+
+        yield return new WaitForSeconds(6);
+
+        HeadToClosestBody(target);
     }
 
 }
