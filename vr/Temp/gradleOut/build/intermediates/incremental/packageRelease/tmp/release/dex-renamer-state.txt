@@ -1,4 +1,0 @@
-#Mon Sep 09 14:24:33 EDT 2019
-base.0=/Users/lukefentress/Documents/GitHub/VR_GAME/vr/Temp/gradleOut/build/intermediates/transforms/dexMerger/release/0
-path.0=classes.dex
-renamed.0=classes.dex
