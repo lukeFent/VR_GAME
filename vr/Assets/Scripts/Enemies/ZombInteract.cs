@@ -14,4 +14,9 @@ public class ZombInteract : InteractClass
         base.Interact(direction);
        
     }
+
+    public void UpdatePosition()
+    {
+        transform.position = anim.rootPosition; 
+    }
 }

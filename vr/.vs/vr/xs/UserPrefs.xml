@@ -1,19 +1,25 @@
 ﻿<Properties StartupConfiguration="{2723F00E-D669-6D54-74E3-59E92CCD286E}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/BaseClasses/InteractClass.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemies/Zombie_Idle.cs">
     <Files>
       <File FileName="Assets/Scripts/Enemies/EnemyIndividualBehavior.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Enemies/ZombHands.cs" />
-      <File FileName="Assets/Scripts/Enemies/ZombInteract.cs" />
-      <File FileName="Assets/Scripts/Enemies/NavMesh_Zomb.cs" Line="12" Column="30" />
       <File FileName="Assets/Scripts/BaseClasses/RagDollController.cs" />
-      <File FileName="Assets/Scripts/BodyGuards/BodyInteract.cs" />
       <File FileName="Assets/Scripts/Areas.cs" />
-      <File FileName="Assets/Scripts/BaseClasses/InteractClass.cs" Line="17" Column="1" />
+      <File FileName="Assets/Scripts/BaseClasses/InteractClass.cs" />
+      <File FileName="Assets/Scripts/WayPoint.cs" />
+      <File FileName="Assets/Scripts/Civilians/CivilianManager.cs" />
+      <File FileName="Assets/Scripts/Civilians/BodyInteract.cs" />
+      <File FileName="Assets/Scripts/Weapons/Bullet.cs" />
+      <File FileName="Assets/Scripts/Player/CheapFirstPersonShooter.cs" />
+      <File FileName="Assets/Scripts/Enemies/ZombInteract.cs" />
+      <File FileName="Assets/Scripts/Enemies/NavMesh_Zomb.cs" />
+      <File FileName="Assets/Scripts/Enemies/ZombAnimator.cs" />
+      <File FileName="Assets/Scripts/Enemies/Zombie_Idle.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="374c21cb-516e-453d-b1dd-b9c917f0c500" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="0ac0583c-11e7-4376-a8c6-8a710dfc66b3" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

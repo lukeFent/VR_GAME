@@ -15,13 +15,21 @@ public class InteractClass : MonoBehaviour
       
      anim = GetComponentInChildren<Animator>();
      ragdoll = GetComponent<RagDollController>();
-     agent = GetComponent<NavMeshAgent>();
-        
+
+        try { 
+            agent = GetComponent<NavMeshAgent>();
+        }
+        catch
+        {
+            agent = GetComponentInChildren<NavMeshAgent>();
+
+        }
+
+
     }
 
    public virtual void Interact(Vector3 direction)
     {
-        Debug.Log("Hey");
         agent.enabled = false;
         anim.enabled = false; 
         ragdoll.KnockAbout(direction);

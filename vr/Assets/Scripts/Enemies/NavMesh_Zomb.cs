@@ -9,12 +9,19 @@ public class NavMesh_Zomb : MonoBehaviour
     int layerMask = 1 << 10;
     public Transform raycastPoint;
 
-	public float waitTime = 0.5f; 
+    public Transform target; 
+
+	public float waitTime = 6f;
+
+    public float huntWaitTime = 2f;
 
     public bool kill = false;
     public int life;
     public float speed;
     public ZombInteract zombie;
+
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +29,9 @@ public class NavMesh_Zomb : MonoBehaviour
 
         zombie = GetComponent<ZombInteract>();
         bodyGuards = FindObjectsOfType<BodyInteract>();
-        HeadToClosestBody(GetClosestBody().position);
+        //HeadToClosestBody(GetClosestBody().position);
+
+        StartCoroutine(FindThePrey());
 
     }
       
@@ -33,24 +42,70 @@ public class NavMesh_Zomb : MonoBehaviour
     {
         zombie.agent.speed = speed;
 
-        if (isBodyInFront())
-            Attack();
     }
 
+
+    IEnumerator FindThePrey()
+    {
+        target = GetClosestBody();
+
+        if (isBodyInFront() || kill)
+        {
+            transform.LookAt(target);
+            Attack();
+            yield break;
+        }
+        else
+            try
+             { 
+            zombie.agent.SetDestination(target.position);
+            }
+
+            catch
+            {
+                Debug.Log("You lose");
+            }
+
+            //zombie.agent.SetDestination(target.position);
+
+            //HeadToClosestBody(target.position);
+
+            yield return new WaitForSeconds(huntWaitTime);
+
+        StartCoroutine(FindThePrey());
+
+    }
+
+    //for the animator
+
+    public void FP()
+    {
+        StartCoroutine(FindThePrey());
+
+    }
 
     void Attack()
     {
-        zombie.agent.isStopped = true;
+        Debug.Log("Attack");
+        transform.LookAt(target);
+        zombie.anim.applyRootMotion = true;
         zombie.anim.SetTrigger("Attack");
-        StartCoroutine(LookAround());
+        //StartCoroutine(LookAround());
 
 
 
     }
 
+    private void OnAnimatorMove()
+    {
+        Debug.Log("I moved");
+    }
+
+    #region Looking for civilans
+
     bool isBodyInFront()
     {
-        Vector3 fwd = raycastPoint.position + raycastPoint.forward * 0.5f;
+        Vector3 fwd = raycastPoint.position + raycastPoint.forward * 1f;
 
         Debug.DrawLine(raycastPoint.position, fwd);
 
@@ -58,17 +113,7 @@ public class NavMesh_Zomb : MonoBehaviour
 
     }
 
-    void HeadToClosestBody(Vector3 closestBody)
-    {
-
-        zombie.anim.applyRootMotion = false;
-
-
-        //transform.LookAt(closestBody);
-
-        zombie.agent.isStopped = false;
-        zombie.agent.SetDestination(closestBody);
-    }
+    
 
 
     Transform GetClosestBody()
@@ -89,10 +134,9 @@ public class NavMesh_Zomb : MonoBehaviour
         if (bodyPositions.Count == 0)
             return null;
 
-        Transform target = bodyPositions[GetClosestDistances(bodyPositions)];
+        Transform t = bodyPositions[GetClosestDistances(bodyPositions)];
 
-        Debug.Log("Next target is  " + target);
-        return target;
+        return t;
 
     }
 
@@ -118,21 +162,26 @@ public class NavMesh_Zomb : MonoBehaviour
         return distanceIterator;
     }
 
+    #endregion
 
     IEnumerator LookAround()
     {
-        zombie.anim.applyRootMotion = true;
-        yield return new WaitForSeconds(0.25f);
+       
+        //yield return new WaitForSeconds(0.25f);
+        //zombie.anim.applyRootMotion = false;
+
+
         Debug.Log("Looking around");
 
         if (GetClosestBody() != null)
         {
-            Vector3 closestBody = GetClosestBody().position;
+            //Vector3 closestBody = GetClosestBody().position;
             zombie.anim.ResetTrigger("Attack");
-            float lookAngle = Vector3.Angle(closestBody, transform.forward);
-            zombie.anim.SetFloat("Direction", -lookAngle);
-            Debug.Log("Look angle is " + lookAngle);
-            StartCoroutine(WaitToCharge(closestBody));
+            //float lookAngle = Vector3.Angle(target.position, transform.forward);
+            //zombie.anim.SetFloat("Direction", -lookAngle);
+
+
+            StartCoroutine(WaitToCharge(target.position));
             yield break;
         }
 
@@ -143,14 +192,27 @@ public class NavMesh_Zomb : MonoBehaviour
 
     }
 
-    IEnumerator WaitToCharge(Vector3 target)
+    IEnumerator WaitToCharge(Vector3 t)
     {
         Debug.Log("Waiting to attack");
-        zombie.anim.SetTrigger("Run");
         zombie.anim.speed = 1 *  waitTime;
-		yield return new WaitForSeconds(waitTime);
+        float animationTime = 0;
 
-        HeadToClosestBody(target);
+        //while(animationTime < 2)
+        //{
+        //    Debug.Log(animationTime);
+        //    animationTime += Time.deltaTime;
+        //    yield return null; 
+        //}
+        //zombie.anim.applyRootMotion = false;
+
+        //zombie.anim.applyRootMotion = false; 
+        yield return new WaitForSeconds(waitTime);
+        zombie.anim.SetTrigger("Run");
+
+        StartCoroutine(FindThePrey());
+
+        //HeadToClosestBody(target);
     }
 
 }

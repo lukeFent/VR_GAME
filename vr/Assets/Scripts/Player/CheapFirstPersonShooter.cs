@@ -5,7 +5,19 @@ using UnityEngine.UI;
 
 public class CheapFirstPersonShooter : MonoBehaviour
 {
-     
+
+    #region Luke's waypoint system
+
+    public CivilianManager civilianManager;
+
+
+
+    //testing bool to show it works
+    public bool testAreaCleared = false;
+    public bool returnToPlayer = false; 
+    #endregion
+
+
     public GameObject character; //The cameras body Model and support rigs
     GameObject cam; //first person view, for both Controller and VR support
     Rigidbody body;
@@ -117,6 +129,9 @@ public class CheapFirstPersonShooter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        civilianManager = CivilianManager.singleton;
+
+
         reloadUI.SetActive(false);
         outOfAmmo.SetActive(false);
         cam = this.gameObject;
@@ -140,6 +155,8 @@ public class CheapFirstPersonShooter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         m_LR = Input.GetAxis("Horizontal");
         m_FB = Input.GetAxis("Vertical");
         r_X = Input.GetAxis("Mouse X") + Input.GetAxis("CamX");

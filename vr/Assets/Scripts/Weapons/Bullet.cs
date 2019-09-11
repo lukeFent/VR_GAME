@@ -8,8 +8,15 @@ public class Bullet : MonoBehaviour
     private Rigidbody body;
     public float distance;
 
+    //public GameObject bloodEffect;
+    public ParticleSystem blood;
+
     private void Start()
     {
+        blood = GetComponentInChildren<ParticleSystem>();
+        blood.Stop();
+        //bloodEffect.SetActive(false);
+
         body = GetComponent<Rigidbody>();
         StartCoroutine(KillBullet(distance));
     }
@@ -24,10 +31,11 @@ public class Bullet : MonoBehaviour
     {
         if (other.transform.GetComponent<InteractClass>())
         {
+            blood.Play(); 
+            //bloodEffect.SetActive(true);
             body.mass = 1;
             Vector3 heading = transform.position - other.transform.position;
-            float distance = heading.magnitude;
-            Vector3 direction = heading / distance;
+            Vector3 direction = heading / heading.magnitude;
 
             other.transform.GetComponent<InteractClass>().Interact(direction);
             if (other.GetComponent<EnemyIndividualBehavior>())
