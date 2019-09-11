@@ -18,8 +18,9 @@ public class CivilianManager : MonoBehaviour
     [Header("Distance from player")]
     public float distanceFromPlayer = 2;
 
-    public bool r_ToPlayer = true;
     public Queue<List<GameObject>> CP_Overide = new Queue<List<GameObject>>();
+
+    bool canRun = false; 
 
     // Start is called before the first frame update
     void Start()
@@ -27,22 +28,38 @@ public class CivilianManager : MonoBehaviour
        RunToPlayer();
     }
 
+    private void OnEnable()
+    {
+        //Areas.AreaCleared += Gagh;
+    }
+
     private void Update()
     {
 
     }
+
+    public void CivilainsRun(bool value)
+    {
+ 
+        if(value != canRun)
+        {
+            RunToPlayer();
+            canRun = value; 
+        }
+    }
+
     public void RunToPlayer()
     {
         for (int i = 0; i < aroundPlayerWP.Length; i++)
         {
-            if (!civilians[i].HasArrived(aroundPlayerWP[i].transform.position))
-            {
-                civilians[i].HeadToSafety(aroundPlayerWP[i].transform.position, distanceFromPlayer);
-            }
+           
+             civilians[i].HeadToSafety(aroundPlayerWP[i].transform.position, distanceFromPlayer);
+            
             if(i >= aroundPlayerWP.Length)
             {
                 foreach (var item in areas)
                 {
+                    canRun = false; 
                     gameObject.GetComponent<Areas>().cleared = false;
                 }
             }
@@ -54,10 +71,9 @@ public class CivilianManager : MonoBehaviour
     {
         for (int i = 0; i < k.Count; i++)
         {
-            if (!civilians[i].HasArrived(k[i].transform.position))
-            {
-                civilians[i].HeadToSafety(k[i].transform.position, distanceFromPlayer);
-            }
+         
+            civilians[i].HeadToSafety(k[i].transform.position, distanceFromPlayer);
+          
             if (i >= k.Count)
             {
                 foreach (var item in areas)

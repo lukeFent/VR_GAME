@@ -208,6 +208,7 @@
     <Compile Include="Assets\Scripts\Weapons\GunClass.cs" />
     <Compile Include="Assets\Scripts\Weapons\Pistol.cs" />
     <Compile Include="Assets\Scripts\Weapons\Shotgun.cs" />
+    <Compile Include="Assets\StartScreen.cs" />
     <None Include="Assets\GoogleVR\Shaders\GvrUIOverlayFont.shader" />
     <None Include="Assets\Glass.shader" />
     <None Include="Assets\GoogleVR\Shaders\GvrAdditiveOverlay.shader" />

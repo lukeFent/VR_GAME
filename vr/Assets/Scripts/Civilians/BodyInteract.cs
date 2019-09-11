@@ -30,20 +30,25 @@ public class BodyInteract : InteractClass
 
     public void HeadToSafety(Vector3 destination, float maxRange)
     {
+        if (hit)
+            return;
+
+
         anim.SetTrigger("Run");
         anim.SetFloat("RunBlend", HeadsOrTails());
-        anim.ResetTrigger("Cower");
+
+
+        //anim.ResetTrigger("Cower");
         agent.isStopped = false;
         agent.SetDestination(destination);
-        if (HasArrived(destination))
-        {
-            StartCoroutine(RunCouroutine(destination, maxRange));
-        }
+       
+        StartCoroutine(FleeingCoRO(destination, maxRange));
+        
     }
 
-    IEnumerator RunCouroutine(Vector3 destination, float maxRange)
+    IEnumerator FleeingCoRO(Vector3 destination, float maxRange)
     {
-
+        //yield return new WaitForSeconds(2);
         //Vector3 heading = destination - transform.position;
 
         while (Vector3.Distance(transform.position, destination) > maxRange)
@@ -60,7 +65,7 @@ public class BodyInteract : InteractClass
 
     public bool HasArrived(Vector3 destination)
     {
-        if (Vector3.Distance(transform.position, destination) <= 1)
+        if (Vector3.Distance(transform.position, destination) <= 3)
         {
             return true;
         }

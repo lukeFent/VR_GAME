@@ -55,8 +55,10 @@ public class NavMesh_Zomb : MonoBehaviour
     IEnumerator FindThePrey()
     {
         target = GetClosestBody();
-
-        if (isBodyInFront() || kill)
+        if (kill)     
+            yield break;
+        
+        if (isBodyInFront())
         {
             zombie.agent.enabled = false; 
             transform.LookAt(target);

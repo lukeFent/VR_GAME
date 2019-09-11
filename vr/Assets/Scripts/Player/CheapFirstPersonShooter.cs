@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CheapFirstPersonShooter : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
     public Text peopleKilled;
     public GameObject outOfAmmo;
     public GameObject AreaClear;
-
+    public GameObject GameOver;
     public bool clearedOne = true;
     public bool clearedTwo = true;
     public bool clearedThree = true;
@@ -207,6 +208,12 @@ public class CheapFirstPersonShooter : MonoBehaviour
         {
             Jump();
         }
+
+        if(deadPeople >= 4)
+        {
+            GameOver.SetActive(true);
+            StartCoroutine(Restart());
+        }
     }
 
     private void MovePosition()
@@ -252,7 +259,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
                     currentWeapons.Peek().gameObject.SetActive(true);
                     pickedUpShotgun = true;
                    
-                    cleared = false;
+                    //cleared = false;
                 }
             }
             if (!pickedUpAK)
@@ -267,7 +274,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
                     g_Weap[1].SetActive(false);
                     currentWeapons.Peek().gameObject.SetActive(true);
                     pickedUpAK = true;
-                    cleared = false;
+                   // cleared = false;
                 }
             }
             if (Input.GetKeyDown(KeyCode.Alpha1) && pickedUpShotgun && !isReloading)
@@ -418,5 +425,12 @@ public class CheapFirstPersonShooter : MonoBehaviour
         {
             clearedThree = false;
         }
+    }
+
+    IEnumerator Restart()
+    {
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadSceneAsync(0);
+        SceneManager.UnloadSceneAsync(1);
     }
 }

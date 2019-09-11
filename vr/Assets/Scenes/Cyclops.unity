@@ -8558,6 +8558,7 @@ MonoBehaviour:
   peopleKilled: {fileID: 1572241653}
   outOfAmmo: {fileID: 542784571}
   AreaClear: {fileID: 592969837}
+  GameOver: {fileID: 1590585247}
   clearedOne: 1
   clearedTwo: 1
   clearedThree: 1
@@ -11667,8 +11668,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   civilianManager: {fileID: 0}
-  testAreaCleared: 0
-  returnToPlayer: 0
   zombies:
   - {fileID: 551373266}
   - {fileID: 0}
@@ -13079,6 +13078,99 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5147146326727391957}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1590585247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1590585248}
+  - component: {fileID: 1590585251}
+  - component: {fileID: 1590585250}
+  - component: {fileID: 1590585249}
+  m_Layer: 5
+  m_Name: GameOVer
+  m_TagString: AreaClear
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1590585248
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590585247}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2056288575}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 52, y: -21}
+  m_SizeDelta: {x: 300, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1590585249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590585247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b56fd9c8ece8440b3b779c24f6dfb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  r_Text: {fileID: 1590585250}
+--- !u!114 &1590585250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590585247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: ad6f7e1a374015740969b840eda18530, type: 3}
+    m_FontSize: 100
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 100
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: GAme Over
+--- !u!222 &1590585251
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590585247}
+  m_CullTransparentMesh: 0
 --- !u!1001 &1603817469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14238,8 +14330,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  distanceFromPlayer: 2
-  r_ToPlayer: 1
+  distanceFromPlayer: 1
 --- !u!4 &1889338771
 Transform:
   m_ObjectHideFlags: 0
@@ -14619,8 +14710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   civilianManager: {fileID: 1889338770}
-  testAreaCleared: 0
-  returnToPlayer: 0
   zombies:
   - {fileID: 551373266}
   - {fileID: 0}
@@ -15006,7 +15095,7 @@ PrefabInstance:
     - target: {fileID: 2883559289279560015, guid: 7ef9430265da54c21aca7c92abfb9476,
         type: 3}
       propertyPath: m_Speed
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ef9430265da54c21aca7c92abfb9476, type: 3}
@@ -15753,7 +15842,7 @@ PrefabInstance:
     - target: {fileID: 2476494677620741296, guid: 9c21fdddf6cb341479d47beebe934aef,
         type: 3}
       propertyPath: m_Speed
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c21fdddf6cb341479d47beebe934aef, type: 3}
@@ -16454,7 +16543,7 @@ PrefabInstance:
     - target: {fileID: 1765731623629419482, guid: a20acfc2467b14d3fbf53a5ae7e0b652,
         type: 3}
       propertyPath: m_Speed
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a20acfc2467b14d3fbf53a5ae7e0b652, type: 3}
@@ -16578,7 +16667,7 @@ PrefabInstance:
     - target: {fileID: 6447917732960970123, guid: e521d787130ad4adeb31481f5b5ff854,
         type: 3}
       propertyPath: m_Speed
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e521d787130ad4adeb31481f5b5ff854, type: 3}

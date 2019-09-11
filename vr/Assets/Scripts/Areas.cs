@@ -7,13 +7,11 @@ public class Areas : MonoBehaviour
 
     #region Luke's waypoint system
 
+    public delegate void AreaCleared();
+    public  event AreaCleared OnAreaCleared; 
+
     public CivilianManager civilianManager;
 
-
-
-    //testing bool to show it works
-    public bool testAreaCleared = false;
-    public bool returnToPlayer = false;
     #endregion
 
     public GameObject[] zombies;
@@ -31,7 +29,7 @@ public class Areas : MonoBehaviour
     GameObject[] wp_Waypoints;
     public List<GameObject> cowerPoints = new List<GameObject>();
 
-  
+
     public CheapFirstPersonShooter player;
     public bool cleared = false;
 
@@ -41,7 +39,6 @@ public class Areas : MonoBehaviour
         FindWaypoints();
         FindSpawnPoints();
         FindZombies();
-        //SetZombieSpeed(0,1, this.gameObject.GetComponent<Areas>().z_list);
     }
 
     void Update()
@@ -49,61 +46,36 @@ public class Areas : MonoBehaviour
         cleared = player.cleared;
         if (cleared)
         {
-            civilianManager.RunToPlayer();
+            civilianManager.CivilainsRun(true);
             player.cleared = cleared;
         }
 
-        if (Vector3.Distance(player.transform.position, transform.position) <= 10)
+        if (Vector3.Distance(player.transform.position, transform.position) <= 8)
         {
-
-            //if (player.GetComponent<CheapFirstPersonShooter>().pickedUpShotgun)
-            //{
-                SetZombieSpeed(0, 1.5f, this.gameObject.GetComponent<Areas>().z_list);
-           // }
-        }
-    }
-
-
-    void DeActivate()
-    {
-        if (Vector3.Distance(player.transform.position, transform.position) >= 1)
-        {
-            if (!player.clearedOne && this.gameObject.ToString() == "AreaOne")
-            {
-                this.gameObject.SetActive(false);
-            }
-            if (!player.clearedTwo && this.gameObject.ToString() == "AreaTwo")
-            {
-                this.gameObject.SetActive(false);
-            }
-            if (!player.clearedThree && this.gameObject.ToString() == "AreaThree")
-            {
-                this.gameObject.SetActive(false);
-            }
+            SetZombieSpeed(0, 1.5f, this.gameObject.GetComponent<Areas>().z_list);
         }
     }
 
     void ChangeCowerPoints()
     {
-        if (Vector3.Distance(player.transform.position,transform.position) >= 1)
+        if (Vector3.Distance(player.transform.position, transform.position) >= 1)
         {
             FindWaypoints();
         }
         civilianManager.RunToAreaWaypoints(cowerPoints);
     }
 
- 
+
     void FindWaypoints()
     {
         wp_Waypoints = GameObject.FindGameObjectsWithTag("WP");
         foreach (var item in wp_Waypoints)
         {
-            if(Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 10)
+            if (Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 10)
             {
                 cowerPoints.Add(item);
             }
         }
-             //Debug.Log("There are  " + cowerPoints.Count + "  CowerPoints available at " + this.gameObject.ToString());
     }
 
     void FindSpawnPoints()
@@ -114,22 +86,22 @@ public class Areas : MonoBehaviour
             if (Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 20)
             {
                 z_Spawn.Add(item);
-                //Debug.Log(item.gameObject.ToString() + " belongs to " + this.gameObject.ToString());
             }
         }
-    Debug.Log("There are  " + z_Spawn.Count + "  Zombie Spawn points available at " + this.gameObject.ToString());
+        Debug.Log("There are  " + z_Spawn.Count + "  Zombie Spawn points available at " + this.gameObject.ToString());
     }
 
-    void SetZombieSpeed(float x, float y, List<GameObject>  z)
+    void SetZombieSpeed(float x, float y, List<GameObject> z)
     {
         foreach (var item in z)
         {
             if (Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 30)
             {
-                item.GetComponent<NavMesh_Zomb>().speed = Random.Range(x,y);
+                item.GetComponent<NavMesh_Zomb>().speed = Random.Range(x, y);
             }
         }
     }
+
     void FindZombies()
     {
         zombies = GameObject.FindGameObjectsWithTag("Enemies");
@@ -143,6 +115,5 @@ public class Areas : MonoBehaviour
                 item.GetComponent<NavMesh_Zomb>().speed = 0;
             }
         }
-       Debug.Log("There are  " + z_list.Count + "  Zombies available at " + this.gameObject.ToString());
     }
 }
