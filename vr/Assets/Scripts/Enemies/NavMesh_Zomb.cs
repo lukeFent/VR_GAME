@@ -19,7 +19,7 @@ public class NavMesh_Zomb : MonoBehaviour
     public int life;
     public float speed;
     public ZombInteract zombie;
-
+   
 
     
 
@@ -30,7 +30,6 @@ public class NavMesh_Zomb : MonoBehaviour
         zombie = GetComponent<ZombInteract>();
         bodyGuards = FindObjectsOfType<BodyInteract>();
         //HeadToClosestBody(GetClosestBody().position);
-
         StartCoroutine(FindThePrey());
 
     }
@@ -40,6 +39,7 @@ public class NavMesh_Zomb : MonoBehaviour
 
     private void FixedUpdate()
     {
+        zombie.anim.speed = speed;
         zombie.agent.speed = speed;
 
     }
@@ -51,6 +51,7 @@ public class NavMesh_Zomb : MonoBehaviour
 
         if (isBodyInFront() || kill)
         {
+            zombie.agent.enabled = false; 
             transform.LookAt(target);
             Attack();
             yield break;
@@ -76,10 +77,11 @@ public class NavMesh_Zomb : MonoBehaviour
 
     }
 
-    //for the animator
+    //for the animator--ZombIdle script
 
     public void FP()
     {
+        zombie.agent.enabled = true; 
         StartCoroutine(FindThePrey());
 
     }
@@ -96,10 +98,7 @@ public class NavMesh_Zomb : MonoBehaviour
 
     }
 
-    private void OnAnimatorMove()
-    {
-        Debug.Log("I moved");
-    }
+  
 
     #region Looking for civilans
 

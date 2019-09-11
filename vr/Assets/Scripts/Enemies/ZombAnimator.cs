@@ -18,16 +18,23 @@ public class ZombAnimator : MonoBehaviour
 
     //}
 
+    private void Update()
+    {
+        if(anim.applyRootMotion == true)
+        {
+            Debug.Log("Root motion is true");
+        }
+    }
+
     private void OnAnimatorMove()
     {
 
-        //if (canMove)
-        //{
-        //    transform.parent.position = GetComponent<Animator>().rootPosition;
-        //    Debug.Log("Move");
+        if(anim.applyRootMotion == true)
+        { 
+        transform.parent.position = GetComponent<Animator>().rootPosition;
+        transform.parent.rotation = GetComponent<Animator>().rootRotation;
+        }
 
-        //    canMove = false;
-        //}
 
     }
 }
