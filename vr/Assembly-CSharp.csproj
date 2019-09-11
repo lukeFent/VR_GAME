@@ -226,6 +226,7 @@
     <None Include="Assets\ImportedAssets\Weapons Pack(LOW POLY)\Weapons Pack info.txt" />
     <None Include="Assets\GoogleVR\Shaders\GvrReticleShader.shader" />
     <None Include="Assets\GoogleVR\Shaders\GvrUIOverlay.shader" />
+    <None Include="Assets\UrbanNightSky\Readme.txt" />
     <None Include="Assets\GoogleVR\Plugins\Android\proguard-gvr.txt" />
     <None Include="Assets\GoogleVR\Plugins\Android\AndroidManifest-Cardboard.xml" />
     <Reference Include="Unity.TextMeshPro.Editor">

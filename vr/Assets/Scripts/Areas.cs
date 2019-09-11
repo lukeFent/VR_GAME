@@ -41,6 +41,7 @@ public class Areas : MonoBehaviour
         FindWaypoints();
         FindSpawnPoints();
         FindZombies();
+        //SetZombieSpeed(0,1, this.gameObject.GetComponent<Areas>().z_list);
     }
 
     void Update()
@@ -51,11 +52,15 @@ public class Areas : MonoBehaviour
             civilianManager.RunToPlayer();
             player.cleared = cleared;
         }
-        if(player.GetComponent<CheapFirstPersonShooter>().pickedUpShotgun)
+
+        if (Vector3.Distance(player.transform.position, transform.position) <= 10)
         {
-            SetZombieSpeed();
+
+            //if (player.GetComponent<CheapFirstPersonShooter>().pickedUpShotgun)
+            //{
+                SetZombieSpeed(0, 1.5f, this.gameObject.GetComponent<Areas>().z_list);
+           // }
         }
-        
     }
 
 
@@ -115,13 +120,13 @@ public class Areas : MonoBehaviour
     Debug.Log("There are  " + z_Spawn.Count + "  Zombie Spawn points available at " + this.gameObject.ToString());
     }
 
-    void SetZombieSpeed()
+    void SetZombieSpeed(float x, float y, List<GameObject>  z)
     {
-        foreach (var item in z_list)
+        foreach (var item in z)
         {
-            if (Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 20)
+            if (Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 30)
             {
-                item.GetComponent<NavMesh_Zomb>().speed = Random.Range(0.5f,2);
+                item.GetComponent<NavMesh_Zomb>().speed = Random.Range(x,y);
             }
         }
     }
@@ -130,7 +135,7 @@ public class Areas : MonoBehaviour
         zombies = GameObject.FindGameObjectsWithTag("Enemies");
         foreach (var item in zombies)
         {
-            if (Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 20)
+            if (Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 30)
             {
                 z_list.Add(item);
                 int i = Random.Range(0, z_Spawn.Count);

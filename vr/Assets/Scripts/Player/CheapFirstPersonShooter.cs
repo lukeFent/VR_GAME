@@ -225,13 +225,13 @@ public class CheapFirstPersonShooter : MonoBehaviour
             cam.transform.rotation = Quaternion.LookRotation(newDir1);
             HeadBob();
         }
-        //else if (deadEnemies < areaOneClear && Vector3.Distance(character.transform.position, positions[0].transform.position) >= 1f)
-        //{
-        //    character.transform.position = Vector3.MoveTowards(character.transform.position, positions[0].transform.position, p_speed * Time.deltaTime);
-        //    Vector3 newDir0 = Vector3.RotateTowards(cam.transform.forward, positions[0].transform.position - character.transform.position, cameraRotateSpeed * Time.deltaTime, 0.0f);
-        //    cam.transform.rotation = Quaternion.LookRotation(newDir0);
-        //    HeadBob();
-        //}
+        else if (deadEnemies < areaOneClear && Vector3.Distance(character.transform.position, positions[0].transform.position) >= 1f)
+        {
+            character.transform.position = Vector3.MoveTowards(character.transform.position, positions[0].transform.position, p_speed * Time.deltaTime);
+            Vector3 newDir0 = Vector3.RotateTowards(cam.transform.forward, positions[0].transform.position - character.transform.position, cameraRotateSpeed * Time.deltaTime, 0.0f);
+            cam.transform.rotation = Quaternion.LookRotation(newDir0);
+            HeadBob();
+        }
 
     }
 
