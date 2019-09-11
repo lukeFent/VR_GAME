@@ -6,43 +6,72 @@ public class CivilianManager : MonoBehaviour
 {
 
    
-    public BodyInteract[] civilains = new BodyInteract[4];
+    public BodyInteract[] civilians = new BodyInteract[4];
+    public GameObject[] areas;
 
     [Header("Around the player waypoints")]
     public WayPoint[] aroundPlayerWP = new WayPoint[4];
 
-    [Header("Area 1 waypoints")]
+    [Header("Area waypoints")]
     public WayPoint[] areaWP = new WayPoint[4];
 
     [Header("Distance from player")]
-    public float distanceFromPlayer = 2; 
+    public float distanceFromPlayer = 2;
+
+    public bool r_ToPlayer = true;
+    public Queue<List<GameObject>> CP_Overide = new Queue<List<GameObject>>();
 
     // Start is called before the first frame update
     void Start()
     {
-        RunToPlayer();
+       RunToPlayer();
     }
 
+    private void Update()
+    {
+
+    }
     public void RunToPlayer()
     {
         for (int i = 0; i < aroundPlayerWP.Length; i++)
         {
-            civilains[i].HeadToSafety(aroundPlayerWP[i].transform.position, distanceFromPlayer);
+            if (!civilians[i].HasArrived(aroundPlayerWP[i].transform.position))
+            {
+                civilians[i].HeadToSafety(aroundPlayerWP[i].transform.position, distanceFromPlayer);
+            }
+            if(i >= aroundPlayerWP.Length)
+            {
+                foreach (var item in areas)
+                {
+                    gameObject.GetComponent<Areas>().cleared = false;
+                }
+            }
         }
     }
 
 
-    public void RunToAreaWaypoints(WayPoint[] areaWP)
+    public void RunToAreaWaypoints(List<GameObject> k)
     {
-        for (int i = 0; i < areaWP.Length; i++)
+        for (int i = 0; i < k.Count; i++)
         {
-            civilains[i].HeadToSafety(areaWP[i].transform.position, distanceFromPlayer);
+            if (!civilians[i].HasArrived(k[i].transform.position))
+            {
+                civilians[i].HeadToSafety(k[i].transform.position, distanceFromPlayer);
+            }
+            if (i >= k.Count)
+            {
+                foreach (var item in areas)
+                {
+                    gameObject.GetComponent<Areas>().cleared = false;
+                }
+            }
         }
+      //  Debug.Log("Take Cover!!!");
     }
 
     public void WalkWithPlayer()
     {
-        //tbd
+      
     }
 
     public static CivilianManager singleton;
@@ -50,5 +79,10 @@ public class CivilianManager : MonoBehaviour
     private void Awake()
     {
         singleton = this;
+    }
+
+    void MakeAQueue(List<GameObject> X)
+    {
+        CP_Overide.Enqueue(X);
     }
 }

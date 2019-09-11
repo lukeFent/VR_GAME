@@ -5,37 +5,139 @@ using UnityEngine;
 public class Areas : MonoBehaviour
 {
 
+    #region Luke's waypoint system
+
+    public CivilianManager civilianManager;
+
+
+
+    //testing bool to show it works
+    public bool testAreaCleared = false;
+    public bool returnToPlayer = false;
+    #endregion
+
     public GameObject[] zombies;
-    public GameObject zombie;
-    public Transform[] spawnPoints;
-    public GameObject[] people;
-    GameObject[] areas;
+    public List<GameObject> z_list = new List<GameObject>();
+
+
     public float respawnTimer = 1;
     bool onlyOne = false;
 
+    //For managing respawn points in each area
+    public GameObject[] spawnPoints;
+    public List<GameObject> z_Spawn = new List<GameObject>();
+
+    //for managing player waypoints per area
+    GameObject[] wp_Waypoints;
+    public List<GameObject> cowerPoints = new List<GameObject>();
+
+  
+    public CheapFirstPersonShooter player;
+    public bool cleared = false;
+
+    private void Start()
+    {
+        civilianManager = CivilianManager.singleton;
+        FindWaypoints();
+        FindSpawnPoints();
+        FindZombies();
+    }
+
     void Update()
     {
-        //foreach (var z in zombies)
-        //{
-        //    if (z.GetComponent<NavMesh_Zomb>().kill)
-        //    {
-        //       Respawn(z);
-        //    }
-        //}
+        cleared = player.cleared;
+        if (cleared)
+        {
+            civilianManager.RunToPlayer();
+            player.cleared = cleared;
+        }
+        if(player.GetComponent<CheapFirstPersonShooter>().pickedUpShotgun)
+        {
+            SetZombieSpeed();
+        }
+        
     }
 
-    void Respawn(GameObject z)
+
+    void DeActivate()
     {
-        int i = 0;
-        i = Random.Range(0, spawnPoints.Length);
-        StartCoroutine(RTimer(respawnTimer, z, i));
+        if (Vector3.Distance(player.transform.position, transform.position) >= 1)
+        {
+            if (!player.clearedOne && this.gameObject.ToString() == "AreaOne")
+            {
+                this.gameObject.SetActive(false);
+            }
+            if (!player.clearedTwo && this.gameObject.ToString() == "AreaTwo")
+            {
+                this.gameObject.SetActive(false);
+            }
+            if (!player.clearedThree && this.gameObject.ToString() == "AreaThree")
+            {
+                this.gameObject.SetActive(false);
+            }
+        }
     }
 
-    IEnumerator RTimer(float timer, GameObject z, int i)
+    void ChangeCowerPoints()
     {
+        if (Vector3.Distance(player.transform.position,transform.position) >= 1)
+        {
+            FindWaypoints();
+        }
+        civilianManager.RunToAreaWaypoints(cowerPoints);
+    }
 
-        yield return new WaitForSeconds(timer);
-        GameObject argh = Instantiate(zombie, spawnPoints[i].position, transform.rotation);
+ 
+    void FindWaypoints()
+    {
+        wp_Waypoints = GameObject.FindGameObjectsWithTag("WP");
+        foreach (var item in wp_Waypoints)
+        {
+            if(Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 10)
+            {
+                cowerPoints.Add(item);
+            }
+        }
+             //Debug.Log("There are  " + cowerPoints.Count + "  CowerPoints available at " + this.gameObject.ToString());
+    }
 
+    void FindSpawnPoints()
+    {
+        spawnPoints = GameObject.FindGameObjectsWithTag("SP");
+        foreach (var item in spawnPoints)
+        {
+            if (Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 20)
+            {
+                z_Spawn.Add(item);
+                //Debug.Log(item.gameObject.ToString() + " belongs to " + this.gameObject.ToString());
+            }
+        }
+    Debug.Log("There are  " + z_Spawn.Count + "  Zombie Spawn points available at " + this.gameObject.ToString());
+    }
+
+    void SetZombieSpeed()
+    {
+        foreach (var item in z_list)
+        {
+            if (Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 20)
+            {
+                item.GetComponent<NavMesh_Zomb>().speed = Random.Range(0.5f,2);
+            }
+        }
+    }
+    void FindZombies()
+    {
+        zombies = GameObject.FindGameObjectsWithTag("Enemies");
+        foreach (var item in zombies)
+        {
+            if (Vector3.Distance(item.transform.position, this.gameObject.transform.position) <= 20)
+            {
+                z_list.Add(item);
+                int i = Random.Range(0, z_Spawn.Count);
+                item.transform.position = z_Spawn[i].transform.position;
+                item.GetComponent<NavMesh_Zomb>().speed = 0;
+            }
+        }
+       Debug.Log("There are  " + z_list.Count + "  Zombies available at " + this.gameObject.ToString());
     }
 }

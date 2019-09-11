@@ -19,23 +19,30 @@ public class NavMesh_Zomb : MonoBehaviour
     public int life;
     public float speed;
     public ZombInteract zombie;
-   
+    public CheapFirstPersonShooter playerScript;
 
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
-
+        playerScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CheapFirstPersonShooter>();
         zombie = GetComponent<ZombInteract>();
         bodyGuards = FindObjectsOfType<BodyInteract>();
         //HeadToClosestBody(GetClosestBody().position);
         StartCoroutine(FindThePrey());
 
     }
-      
-    
 
+
+    private void Update()
+    {
+        if (kill)
+        {
+            playerScript.deadEnemies += 1;
+            kill = false;
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -213,5 +220,8 @@ public class NavMesh_Zomb : MonoBehaviour
 
         //HeadToClosestBody(target);
     }
-
+    void Death()
+    {
+     playerScript.deadEnemies += 1;
+    }
 }

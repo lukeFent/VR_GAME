@@ -31,19 +31,6 @@ public class EnemyIndividualBehavior : MonoBehaviour
         speed = newSpeed;
     }
 
-    private void OnTriggerEnter(Collider c)
-    {
-        if (c.gameObject.tag == "Bullet")
-        {
-            life -= 1;
-        }
-    }
 
-    void Death()
-    {
-        if(life <= 0)
-        {
-            playerScript.deadEnemies += 1;
-        }
-    }
+ 
 }

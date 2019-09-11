@@ -6,16 +6,6 @@ using UnityEngine.UI;
 public class CheapFirstPersonShooter : MonoBehaviour
 {
 
-    #region Luke's waypoint system
-
-    public CivilianManager civilianManager;
-
-
-
-    //testing bool to show it works
-    public bool testAreaCleared = false;
-    public bool returnToPlayer = false; 
-    #endregion
 
 
     public GameObject character; //The cameras body Model and support rigs
@@ -39,10 +29,10 @@ public class CheapFirstPersonShooter : MonoBehaviour
     public GameObject outOfAmmo;
     public GameObject AreaClear;
 
-    bool clearedOne = true;
-    bool clearedTwo = true;
-    bool clearedThree = true;
-    bool cleared = false;
+    public bool clearedOne = true;
+    public bool clearedTwo = true;
+    public bool clearedThree = true;
+    public bool cleared = false;
 
     #endregion
     #region First Person Controller
@@ -122,14 +112,14 @@ public class CheapFirstPersonShooter : MonoBehaviour
     public float equipedWeaponReloadTime;
 
     bool isReloading;
-    bool pickedUpShotgun = false;
-    bool pickedUpAK = false;
+    public bool pickedUpShotgun = false;
+    public bool pickedUpAK = false;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        civilianManager = CivilianManager.singleton;
+        
 
 
         reloadUI.SetActive(false);
@@ -235,13 +225,13 @@ public class CheapFirstPersonShooter : MonoBehaviour
             cam.transform.rotation = Quaternion.LookRotation(newDir1);
             HeadBob();
         }
-        else if (deadEnemies < areaOneClear && Vector3.Distance(character.transform.position, positions[0].transform.position) >= 1f)
-        {
-            character.transform.position = Vector3.MoveTowards(character.transform.position, positions[0].transform.position, p_speed * Time.deltaTime);
-            Vector3 newDir0 = Vector3.RotateTowards(cam.transform.forward, positions[0].transform.position - character.transform.position, cameraRotateSpeed * Time.deltaTime, 0.0f);
-            cam.transform.rotation = Quaternion.LookRotation(newDir0);
-            HeadBob();
-        }
+        //else if (deadEnemies < areaOneClear && Vector3.Distance(character.transform.position, positions[0].transform.position) >= 1f)
+        //{
+        //    character.transform.position = Vector3.MoveTowards(character.transform.position, positions[0].transform.position, p_speed * Time.deltaTime);
+        //    Vector3 newDir0 = Vector3.RotateTowards(cam.transform.forward, positions[0].transform.position - character.transform.position, cameraRotateSpeed * Time.deltaTime, 0.0f);
+        //    cam.transform.rotation = Quaternion.LookRotation(newDir0);
+        //    HeadBob();
+        //}
 
     }
 
@@ -261,6 +251,8 @@ public class CheapFirstPersonShooter : MonoBehaviour
                     g_Weap[0].SetActive(false);
                     currentWeapons.Peek().gameObject.SetActive(true);
                     pickedUpShotgun = true;
+                   
+                    cleared = false;
                 }
             }
             if (!pickedUpAK)
@@ -275,6 +267,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
                     g_Weap[1].SetActive(false);
                     currentWeapons.Peek().gameObject.SetActive(true);
                     pickedUpAK = true;
+                    cleared = false;
                 }
             }
             if (Input.GetKeyDown(KeyCode.Alpha1) && pickedUpShotgun && !isReloading)
@@ -410,6 +403,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
     IEnumerator AreaCleared()
     {
         AreaClear.SetActive(true);
+        cleared = true;
         yield return new WaitForSeconds(4);
         AreaClear.SetActive(false);
         if (deadEnemies >= areaOneClear && deadEnemies < areaTwoClear)

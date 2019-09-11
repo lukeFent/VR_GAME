@@ -38,6 +38,7 @@ public class Bullet : MonoBehaviour
             Vector3 direction = heading / heading.magnitude;
 
             other.transform.GetComponent<InteractClass>().Interact(direction);
+
             if (other.GetComponent<EnemyIndividualBehavior>())
             {
                 other.GetComponent<EnemyIndividualBehavior>().kill = true;

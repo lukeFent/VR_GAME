@@ -22,7 +22,7 @@ public class ZombAnimator : MonoBehaviour
     {
         if(anim.applyRootMotion == true)
         {
-            Debug.Log("Root motion is true");
+            //Debug.Log("Root motion is true");
         }
     }
 

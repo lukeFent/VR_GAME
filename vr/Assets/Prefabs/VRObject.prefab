@@ -231,31 +231,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 0}
   VR_Mode: 0
+  footSteps: []
+  w_Switch: {fileID: 0}
+  p_Sound: {fileID: 0}
   reloadUI: {fileID: 0}
   shotsRemaining: {fileID: 0}
   totalAmmo: {fileID: 0}
-  jumpHeight: 5
-  m_FB: 0
-  m_LR: 0
-  p_speed: 6
-  p_MS: 20
+  zombiesKilled: {fileID: 0}
+  peopleKilled: {fileID: 0}
+  outOfAmmo: {fileID: 0}
+  AreaClear: {fileID: 0}
+  clearedOne: 1
+  clearedTwo: 1
+  clearedThree: 1
+  cleared: 0
   sensitivity: 5
   smoothness: 2
   h_drop: 0
   h_rise: 0
   cameraRotateSpeed: 0
-  bulletSpawn: {fileID: 150}
-  bulletPrefab: {fileID: 2448211044534255958, guid: 8121e1ddb0e394b7aae84b1c789addc2,
-    type: 3}
-  weaponsInGame: []
-  equipedWeaponReloadTime: 0
-  canShoot: 0
-  pickedUpShotgun: 0
-  pickedUpAK: 0
   deadEnemies: 0
   deadPeople: 0
+  g_Weap: []
   enemies: []
   positions: []
+  weaponsInGame: []
+  equipedWeaponReloadTime: 0
+  pickedUpShotgun: 0
+  pickedUpAK: 0
 --- !u!54 &249
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -353,7 +356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198490, guid: 5ca80f4596fa44b87912a0592346d260, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ca80f4596fa44b87912a0592346d260, type: 3}
@@ -382,7 +385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 555767533, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1820761120, guid: 34c21f523e72f45509a4e37ed0293c3b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -498,7 +501,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 171526, guid: 60270cf52a5e94998a5a335989159738, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 482300, guid: 60270cf52a5e94998a5a335989159738, type: 3}
       propertyPath: m_LocalPosition.x
