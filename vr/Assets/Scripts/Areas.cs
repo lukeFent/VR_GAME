@@ -46,7 +46,7 @@ public class Areas : MonoBehaviour
         cleared = player.cleared;
         if (cleared)
         {
-            civilianManager.CivilainsRun(true);
+            civilianManager.FollowPlayer();
             player.cleared = cleared;
         }
 

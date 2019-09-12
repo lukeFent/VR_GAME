@@ -48,6 +48,46 @@ public class CivilianManager : MonoBehaviour
         }
     }
 
+
+    public void FollowPlayer()
+    {
+        foreach (BodyInteract civ in civilians)
+        {
+            if (civ.agent.isActiveAndEnabled)
+            {
+                civ.anim.SetTrigger("Run");
+                civ.agent.isStopped = false;
+
+            }
+        }
+
+        StartCoroutine(FP());
+    }
+
+    IEnumerator FP()
+    {
+        if(CheapFirstPersonShooter.singleton.pickedUpShotgun == false)
+        {
+            for (int i = 0; i < aroundPlayerWP.Length; i++)
+            {
+                if (civilians[i].agent.isActiveAndEnabled)
+                {
+                civilians[i].agent.SetDestination(CheapFirstPersonShooter.singleton.transform.position);
+                Debug.Log(CheapFirstPersonShooter.singleton.transform.position);
+                }
+                yield return null;
+            }
+        
+
+        }
+
+        else
+        {
+            RunToPlayer();
+        }
+    }
+
+
     public void RunToPlayer()
     {
         for (int i = 0; i < aroundPlayerWP.Length; i++)

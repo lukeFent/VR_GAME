@@ -67,8 +67,9 @@ public class NavMesh_Zomb : MonoBehaviour
         }
         else
             try
-             { 
-            zombie.agent.SetDestination(target.position);
+             {
+                if(zombie.agent.isActiveAndEnabled)
+                zombie.agent.SetDestination(target.position);
             }
 
             catch

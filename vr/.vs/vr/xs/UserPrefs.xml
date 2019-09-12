@@ -1,5 +1,5 @@
 ﻿<Properties StartupConfiguration="{2723F00E-D669-6D54-74E3-59E92CCD286E}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemies/Zombie_Idle.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Enemies/NavMesh_Zomb.cs">
     <Files>
       <File FileName="Assets/Scripts/Enemies/EnemyIndividualBehavior.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Enemies/ZombHands.cs" />
@@ -12,14 +12,14 @@
       <File FileName="Assets/Scripts/Weapons/Bullet.cs" />
       <File FileName="Assets/Scripts/Player/CheapFirstPersonShooter.cs" />
       <File FileName="Assets/Scripts/Enemies/ZombInteract.cs" />
-      <File FileName="Assets/Scripts/Enemies/NavMesh_Zomb.cs" />
+      <File FileName="Assets/Scripts/Enemies/NavMesh_Zomb.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Enemies/ZombAnimator.cs" />
       <File FileName="Assets/Scripts/Enemies/Zombie_Idle.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="0ac0583c-11e7-4376-a8c6-8a710dfc66b3" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f112da77-bbbb-40b3-8f1c-912a18eca78e" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

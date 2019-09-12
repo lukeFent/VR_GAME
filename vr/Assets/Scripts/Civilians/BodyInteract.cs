@@ -11,6 +11,11 @@ public class BodyInteract : InteractClass
     public float speed;
     public bool hit = false;
 
+    private void Start()
+    {
+        anim.SetTrigger("Run");
+        anim.SetFloat("RunBlend", HeadsOrTails());
+    }
 
     public override void Interact(Vector3 direction)
     {
@@ -34,8 +39,8 @@ public class BodyInteract : InteractClass
             return;
 
 
-        anim.SetTrigger("Run");
-        anim.SetFloat("RunBlend", HeadsOrTails());
+        //anim.SetTrigger("Run");
+        //anim.SetFloat("RunBlend", HeadsOrTails());
 
 
         //anim.ResetTrigger("Cower");
@@ -45,6 +50,7 @@ public class BodyInteract : InteractClass
         StartCoroutine(FleeingCoRO(destination, maxRange));
         
     }
+
 
     IEnumerator FleeingCoRO(Vector3 destination, float maxRange)
     {
@@ -62,6 +68,12 @@ public class BodyInteract : InteractClass
         agent.isStopped = true;
 
     }
+
+  
+
+
+
+
 
     public bool HasArrived(Vector3 destination)
     {

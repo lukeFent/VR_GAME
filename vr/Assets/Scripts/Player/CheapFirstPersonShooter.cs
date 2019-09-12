@@ -85,7 +85,7 @@ public class CheapFirstPersonShooter : MonoBehaviour
     public GameObject[] g_Weap;
     #region AreaOne
     //Zombie Conditions
-    int areaOneClear = 3;
+    int areaOneClear = 1;
     //People Conditions
     int areaOneFail = 3;
     #endregion
@@ -432,5 +432,13 @@ public class CheapFirstPersonShooter : MonoBehaviour
         yield return new WaitForSeconds(1);
         SceneManager.LoadSceneAsync(0);
         SceneManager.UnloadSceneAsync(1);
+    }
+
+
+    public static CheapFirstPersonShooter singleton;
+
+    private void Awake()
+    {
+        singleton = this; 
     }
 }
