@@ -148,8 +148,8 @@ public class CheapFirstPersonShooter : MonoBehaviour
     {
         
 
-        m_LR = Input.GetAxis("Horizontal");
-        m_FB = Input.GetAxis("Vertical");
+        m_LR = Input.GetAxis("Horizontal") + Input.GetAxis("MoveV");
+        m_FB = Input.GetAxis("Vertical") + Input.GetAxis("MoveH");
         r_X = Input.GetAxis("Mouse X") + Input.GetAxis("CamX");
         r_Y = Input.GetAxis("Mouse Y") + Input.GetAxis("CamY");
 
@@ -209,11 +209,11 @@ public class CheapFirstPersonShooter : MonoBehaviour
             Jump();
         }
 
-        if(deadPeople >= 4)
-        {
-            GameOver.SetActive(true);
-            StartCoroutine(Restart());
-        }
+        //if(deadPeople >= 4)
+        //{
+        //    GameOver.SetActive(true);
+        //    StartCoroutine(Restart());
+        //}
     }
 
     private void MovePosition()
